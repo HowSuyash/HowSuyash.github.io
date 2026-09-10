@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- ========= EDIT: page metadata ========= -->
+<title>Suyash Shukla — Web Developer</title>
+<meta name="description" content="CS undergraduate working across web development, cloud computing and Java. Selected projects, experience and contact." />
+<meta name="author" content="Suyash Shukla" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Suyash Shukla — Web Developer" />
+<meta property="og:description" content="CS undergraduate working across web development, cloud computing and Java." />
+<meta property="og:image" content="assets/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<!-- Roboto Flex carries the wght + wdth axes the hero proximity effect animates -->
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<!-- bump ?v= whenever css/js change so no browser can serve a stale copy -->
+<link rel="stylesheet" href="css/styles.css?v=5" />
+
+<script>document.documentElement.classList.add('js');</script>
+</head>
+
+<body data-theme="light">
+
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<a class="skip-link" href="#work">Skip to work</a>
+
+<!-- ============================== NAV ============================== -->
+<header class="nav">
+  <a class="nav__brand" href="#top">
+    <span class="nav__mark" aria-hidden="true"></span>
+    <span>Suyash Shukla</span>
+  </a>
+  <nav class="nav__links" aria-label="Primary">
+    <a href="#work">Work</a>
+    <a href="#capabilities">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#resume">Résumé</a>
+  </nav>
+  <a class="nav__cta" href="#contact">
+    <span>Contact</span>
+    <span class="nav__dot" aria-hidden="true"></span>
+  </a>
+</header>
+
+<main id="top">
+
+  <!-- ======================= CH 1 — HERO ========================= -->
+  <section class="chapter hero" data-chapter="light">
+    <div class="hero__inner">
+
+      <div class="hero__lead">
+        <!-- data-vft = variable-font proximity: every letter warps toward the cursor -->
+        <h1 class="hero__name" data-vft>Suyash Shukla</h1>
+
+        <p class="hero__since">
+          Web &amp; cloud<br />
+          <em>CS undergraduate</em>
+        </p>
+
+        <p class="hero__lang">
+          <span><i class="pulse" aria-hidden="true"></i> Open to internships</span>
+          <span class="hero__sep" aria-hidden="true">/</span>
+          <span>India — remote</span>
+        </p>
+      </div>
+
+      <!-- EDIT: replace portrait.svg with your own image — see README -->
+      <figure class="hero__portrait" data-portrait>
+        <img src="assets/portrait.svg" alt="Suyash Shukla in a Batman costume" width="400" height="500" />
+        <figcaption aria-hidden="true">◆ after hours</figcaption>
+      </figure>
+
+    </div>
+
+    <div class="hero__cue" aria-hidden="true">
+      <span class="hero__cue-line"><i></i></span>
+      <span>Scroll</span>
+    </div>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker__track" data-ticker>
+        <span>HTML</span><b>◆</b><span>CSS</span><b>◆</b><span>JavaScript</span><b>◆</b><span>React</span><b>◆</b><span>Java</span><b>◆</b><span>AWS</span><b>◆</b><span>Flask</span><b>◆</b><span>Firebase</span><b>◆</b><span>REST APIs</span><b>◆</b>
+        <span>HTML</span><b>◆</b><span>CSS</span><b>◆</b><span>JavaScript</span><b>◆</b><span>React</span><b>◆</b><span>Java</span><b>◆</b><span>AWS</span><b>◆</b><span>Flask</span><b>◆</b><span>Firebase</span><b>◆</b><span>REST APIs</span><b>◆</b>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CH 2 — MANIFESTO ====================== -->
+  <section class="chapter manifesto" data-chapter="dark" id="about">
+    <span class="eyebrow">01 — Approach</span>
+    <p class="manifesto__text" data-words>
+      I learn by building. Web development, cloud computing and Java, turned
+      into projects that solve real problems rather than toy demos.
+    </p>
+  </section>
+
+  <!-- ================== CH 3 — WORK (PINNED) ==================== -->
+  <section class="reel" id="work" data-chapter="dark" data-reel>
+    <div class="reel__pin">
+
+      <div class="reel__head">
+        <span class="eyebrow">02 — Selected work</span>
+        <span class="reel__counter"><b data-reel-current>01</b> / 04</span>
+      </div>
+
+      <div class="reel__track" data-reel-track>
+
+        <article class="panel">
+          <div class="panel__visual panel__visual--shot panel__visual--01">
+            <img src="assets/project-01.jpg" width="1200" height="900" loading="lazy"
+                 alt="JanVaani live site — One Platform. Every Grievance. Resolved. — with complaint statistics" />
+          </div>
+          <div class="panel__info">
+            <span class="panel__num">01</span>
+            <h2 class="panel__title">JanVaani</h2>
+            <p class="panel__desc">
+              Zero-backend civic grievance platform built for India Innovates 2026.
+              AI-driven complaint prioritisation, automatic routing across six
+              government departments, and real-time ticket tracking with no login.
+              Cut simulated resolution time from 72+ hours to 36, at a 94% resolution rate.
+            </p>
+            <ul class="panel__tags"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Multilingual</li></ul>
+            <div class="panel__links">
+              <a href="https://smartps-crm.netlify.app/" target="_blank" rel="noopener noreferrer" data-magnetic>Live site <i aria-hidden="true">↗</i></a>
+              <a href="https://drive.google.com/file/d/1BvhKTSOiJBS4cqGuRTViAYkHfZNquVjM/view?usp=sharing" target="_blank" rel="noopener noreferrer" data-magnetic>Demo video <i aria-hidden="true">↗</i></a>
+              <a href="https://github.com/HowSuyash/Smart-psCRM" target="_blank" rel="noopener noreferrer" data-magnetic>Source <i aria-hidden="true">↗</i></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel__visual panel__visual--shot panel__visual--02">
+            <img src="assets/project-02.jpg" width="1200" height="900" loading="lazy"
+                 alt="Smart Attendance sign-in screen for the face emotion recognition system" />
+          </div>
+          <div class="panel__info">
+            <span class="panel__num">02</span>
+            <h2 class="panel__title">Smart Attendance</h2>
+            <p class="panel__desc">
+              Full-stack engagement analytics for classrooms, built for Cloud Hackathon 2026.
+              A Hugging Face Vision Transformer classifies emotion from classroom photos in
+              real time and maps it to engagement — focused or distracted. I owned the
+              backend, Firebase integration and cloud architecture, on a zero-cost stack.
+            </p>
+            <ul class="panel__tags"><li>Flask</li><li>MediaPipe</li><li>Hugging Face</li><li>Firebase</li><li>Chart.js</li></ul>
+            <div class="panel__links">
+              <a href="https://dashing-concha-5401f5.netlify.app/login.html" target="_blank" rel="noopener noreferrer" data-magnetic>Live site <i aria-hidden="true">↗</i></a>
+              <a href="https://github.com/HowSuyash/SmartAttendance" target="_blank" rel="noopener noreferrer" data-magnetic>Source <i aria-hidden="true">↗</i></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel__visual panel__visual--shot panel__visual--03">
+            <img src="assets/project-03.jpg" width="1200" height="900" loading="lazy"
+                 alt="CryptoSim sign-in screen" />
+          </div>
+          <div class="panel__info">
+            <span class="panel__num">03</span>
+            <h2 class="panel__title">CryptoCurrency<br />Simulation</h2>
+            <p class="panel__desc">
+              The complete front end for a simulated cryptocurrency trading platform,
+              built during the IBM PBEL program. Full authentication flow — login,
+              sign-up and password recovery — plus a profile dashboard.
+            </p>
+            <ul class="panel__tags"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
+            <div class="panel__links">
+              <a href="https://github.com/HowSuyash/Cryptocurrency-Simulation" target="_blank" rel="noopener noreferrer" data-magnetic>Repo <i aria-hidden="true">↗</i></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel panel--end">
+          <div class="panel__info">
+            <span class="panel__num">04</span>
+            <h2 class="panel__title">More on<br />GitHub</h2>
+            <p class="panel__desc">
+              Coursework, experiments and the things that never got a landing page.
+            </p>
+            <div class="panel__links">
+              <a href="https://github.com/HowSuyash" target="_blank" rel="noopener noreferrer" data-magnetic>@HowSuyash <i aria-hidden="true">↗</i></a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="reel__hint" aria-hidden="true">
+        <span class="reel__bar"><i data-reel-bar></i></span>
+        <span>Keep scrolling</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =================== CH 4 — CAPABILITIES ==================== -->
+  <section class="chapter caps" id="capabilities" data-chapter="light">
+    <span class="eyebrow">03 — What I work with</span>
+
+    <ul class="caps__list">
+      <li class="cap">
+        <span class="cap__num">01</span>
+        <h2 class="cap__title">Front-end development</h2>
+        <p class="cap__desc">HTML, CSS, JavaScript and React. Consuming REST APIs.</p>
+        <i class="cap__arrow" aria-hidden="true">↗</i>
+      </li>
+      <li class="cap">
+        <span class="cap__num">02</span>
+        <h2 class="cap__title">Java</h2>
+        <p class="cap__desc">Data structures and algorithms, OOP, REST APIs.</p>
+        <i class="cap__arrow" aria-hidden="true">↗</i>
+      </li>
+      <li class="cap">
+        <span class="cap__num">03</span>
+        <h2 class="cap__title">Cloud computing</h2>
+        <p class="cap__desc">AWS Academy Graduate — Cloud Foundations and Cloud Architect.</p>
+        <i class="cap__arrow" aria-hidden="true">↗</i>
+      </li>
+      <li class="cap">
+        <span class="cap__num">04</span>
+        <h2 class="cap__title">Shipping end to end</h2>
+        <p class="cap__desc">Hackathon builds taken from idea to working demo, backend included.</p>
+        <i class="cap__arrow" aria-hidden="true">↗</i>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ==================== CH 5 — EXPERIENCE ===================== -->
+  <section class="chapter exp" id="experience" data-chapter="dark" data-exp>
+    <span class="eyebrow">04 — Experience &amp; education</span>
+
+    <ol class="exp__list">
+      <span class="exp__rail" aria-hidden="true"><i data-exp-rail></i></span>
+
+      <li class="exp__row">
+        <span class="exp__year">May — Jul 2026</span>
+        <div class="exp__body">
+          <h2 class="exp__role">Web Developer, Paid Internship</h2>
+          <span class="exp__org">Tryhosting Technologies</span>
+          <p class="exp__desc">
+            Two-month paid internship building and maintaining web applications,
+            working across front-end technologies to deliver client-ready features.
+          </p>
+        </div>
+      </li>
+      <li class="exp__row">
+        <span class="exp__year">Jul 2025 — Aug 2026</span>
+        <div class="exp__body">
+          <h2 class="exp__role">Blockchain Technology Intern</h2>
+          <span class="exp__org">IBM</span>
+          <p class="exp__desc">
+            Internship focused on blockchain fundamentals and real-world applications,
+            covering distributed ledger concepts and their use in secure,
+            decentralised systems.
+          </p>
+        </div>
+      </li>
+      <li class="exp__row">
+        <span class="exp__year">2024 — 2028</span>
+        <div class="exp__body">
+          <h2 class="exp__role">B.Tech, Computer Science</h2>
+          <span class="exp__org">ABES Engineering College</span>
+          <p class="exp__desc">
+            GPA 7.9 / 10.0. Class 12 CBSE 83%, Class 10 CBSE 91.7%.
+          </p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ====================== CH 6 — RÉSUMÉ ======================= -->
+  <section class="chapter resume" id="resume" data-chapter="light">
+    <span class="eyebrow">05 — Résumé</span>
+
+    <div class="resume__grid">
+      <div class="resume__side">
+        <h2 class="resume__title">One page,<br />no fluff</h2>
+        <p class="resume__text">
+          Everything on this site, condensed to a single sheet.
+          Last updated August 2026.
+        </p>
+
+        <ul class="resume__facts">
+          <li><b>2</b><span>internships</span></li>
+          <li><b>3</b><span>shipped projects</span></li>
+          <li><b>7.9</b><span>GPA / 10</span></li>
+        </ul>
+
+        <div class="resume__actions">
+          <a class="resume__btn resume__btn--solid" href="assets/resume.pdf"
+             target="_blank" rel="noopener noreferrer" data-magnetic>
+            Open PDF <i aria-hidden="true">↗</i>
+          </a>
+          <a class="resume__btn" href="assets/resume.pdf"
+             download="Suyash-Shukla-Resume.pdf" data-magnetic>Download</a>
+        </div>
+      </div>
+
+      <!-- the page image, not an <iframe>: PDF embeds render blank on most
+           mobile browsers. Clicking opens the real PDF. -->
+      <a class="resume__paper" href="assets/resume.pdf" target="_blank" rel="noopener noreferrer"
+         aria-label="Open Suyash Shukla's résumé as a PDF">
+        <img src="assets/resume-preview.png" width="1191" height="1684" loading="lazy"
+             alt="First page of Suyash Shukla's résumé — summary, work experience, projects, education and skills" />
+      </a>
+    </div>
+  </section>
+
+  <!-- ===================== CH 7 — CONTACT ======================= -->
+  <section class="chapter contact" id="contact" data-chapter="accent">
+    <div class="contact__inner">
+      <span class="eyebrow">06 — Contact</span>
+      <h2 class="contact__title" data-split>Let's talk</h2>
+      <p class="contact__text">
+        Open to internships, front-end work and interesting problems.
+        Email is the fastest way to reach me.
+      </p>
+      <a class="contact__mail" href="mailto:suyashshukla0702@gmail.com" data-magnetic>suyashshukla0702@gmail.com</a>
+      <button class="contact__copy" data-copy="suyashshukla0702@gmail.com" type="button">Copy address</button>
+
+      <div class="contact__socials">
+        <a href="https://github.com/HowSuyash" target="_blank" rel="noopener noreferrer">GitHub <i aria-hidden="true">↗</i></a>
+        <a href="https://www.linkedin.com/in/suyash-shukla-b74b682a7/" target="_blank" rel="noopener noreferrer">LinkedIn <i aria-hidden="true">↗</i></a>
+        <a href="tel:+916392852762">+91 63928 52762</a>
+        <a href="assets/resume.pdf" target="_blank" rel="noopener noreferrer">Résumé <i aria-hidden="true">↗</i></a>
+      </div>
+    </div>
+
+    <div class="ticker ticker--big" aria-hidden="true">
+      <div class="ticker__track" data-ticker data-dir="-1">
+        <span>LET'S BUILD</span><b>◆</b><span>LET'S BUILD</span><b>◆</b><span>LET'S BUILD</span><b>◆</b><span>LET'S BUILD</span><b>◆</b>
+        <span>LET'S BUILD</span><b>◆</b><span>LET'S BUILD</span><b>◆</b><span>LET'S BUILD</span><b>◆</b><span>LET'S BUILD</span><b>◆</b>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span>© <span id="year">2026</span> Suyash Shukla</span>
+  <span>Built from scratch — no frameworks</span>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/main.js?v=5"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500" role="img" aria-label="Placeholder portrait in a Batman cowl">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1a1a20"/>
+      <stop offset="1" stop-color="#08080a"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#ffd84d" stop-opacity=".95"/>
+      <stop offset="1" stop-color="#ffd84d" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="50%" cy="42%" r="55%">
+      <stop offset="0" stop-color="#ffd84d" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#ffd84d" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="frame">
+      <rect width="400" height="500" rx="10"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#frame)">
+    <rect width="400" height="500" fill="url(#bg)"/>
+    <rect width="400" height="500" fill="url(#halo)"/>
+
+    <!-- faint grid, echoes the project panels -->
+    <g stroke="#ffd84d" stroke-opacity=".06" stroke-width="1">
+      <path d="M0 60H400M0 120H400M0 180H400M0 240H400M0 300H400M0 360H400M0 420H400M0 480H400"/>
+      <path d="M50 0V500M100 0V500M150 0V500M200 0V500M250 0V500M300 0V500M350 0V500"/>
+    </g>
+
+    <!-- cape wings -->
+    <path d="M28 500C46 396 92 350 152 340L124 500Z" fill="#131317"/>
+    <path d="M372 500C354 396 308 350 248 340L276 500Z" fill="#131317"/>
+
+    <!-- shoulders -->
+    <path d="M44 500C64 386 122 338 200 338s136 48 156 162Z" fill="#0c0c0f"/>
+
+    <!-- neck -->
+    <path d="M176 286h48v66h-48z" fill="#111114"/>
+
+    <!-- chest emblem -->
+    <path d="M200 402 233 386 224 404 250 396 232 424 200 434 168 424 150 396 176 404 167 386Z"
+          fill="#ffd84d" opacity=".85"/>
+
+    <!-- cowl -->
+    <path d="M200 108c-62 0-84 52-84 104 0 66 38 112 84 112s84-46 84-112c0-52-22-104-84-104Z" fill="#09090b"/>
+
+    <!-- ears -->
+    <path d="M138 142 124 52 180 116Z" fill="#09090b"/>
+    <path d="M262 142 276 52 220 116Z" fill="#09090b"/>
+
+    <!-- eye slits -->
+    <path d="M148 204 190 196 186 222 151 224Z" fill="#ffd84d"/>
+    <path d="M252 204 210 196 214 222 249 224Z" fill="#ffd84d"/>
+
+    <!-- jaw -->
+    <path d="M178 288h44" stroke="#2c2c32" stroke-width="7" stroke-linecap="round"/>
+
+    <!-- rim light down the left of the cowl -->
+    <path d="M200 108c-62 0-84 52-84 104 0 30 8 56 22 76" stroke="url(#rim)" stroke-width="4" fill="none"/>
+  </g>
+</svg>
