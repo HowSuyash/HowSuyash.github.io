@@ -148,6 +148,35 @@ resize, so the horizontal distance is always exact — nothing to configure.
 One thing is **not** automatic: the `/ 04` total in `.reel__counter`.
 Update that by hand.
 
+### The animated background
+
+`.aura` is a fixed layer at `z-index: 0` — above the page background,
+below the content at `z-index: 2`. Three soft pools of light drift across
+it on long, offset loops, with a faint 64px grid sliding underneath.
+
+Two rules keep it cheap enough to run on a phone:
+
+- **Only `transform` is animated.** Transforms are handled by the
+  compositor, so none of this costs a layout or a paint per frame.
+  Animating `background-position`, or a blur, would put it back on the
+  main thread every single frame.
+- **No `filter: blur()`.** The softness comes from the radial gradients
+  themselves. A blur over a viewport-sized element is one of the most
+  expensive things you can ask a browser to do continuously.
+
+The grid tile is 64px and the drift is exactly one tile, so the loop wraps
+with no visible jump. Below 700px the third pool is dropped — one less
+composited layer, and it sat mostly off-screen at that width anyway.
+
+`prefers-reduced-motion` already collapses every animation duration
+globally, which freezes these where they stand: the layers stay, the
+movement stops.
+
+To calm it down, lower the percentages in the three `radial-gradient`
+colour stops. To slow it, raise the `46s` / `61s` / `53s` durations —
+keep them different, or the pools start moving in lockstep and the eye
+picks up the pattern.
+
 ### Change the accent
 
 `css/styles.css`, first block. One value:
