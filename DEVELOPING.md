@@ -151,8 +151,21 @@ Update that by hand.
 ### The animated background
 
 `.aura` is a fixed layer at `z-index: 0` — above the page background,
-below the content at `z-index: 2`. Three soft pools of light drift across
-it on long, offset loops, with a faint 64px grid sliding underneath.
+below the content at `z-index: 2`. Inside it:
+
+| Layer | What it does |
+|---|---|
+| `.aura__haze` x3 | pools of light drifting on long, offset loops |
+| `.aura__grid` | a faint 64px grid sliding diagonally |
+| `.aura__dust` x2 | specks drifting up at two speeds, for depth |
+| `.aura__beam` | a searchlight crossing the frame |
+
+The beam starts and ends well outside the viewport, so the loop restart is
+never seen and it needs no opacity keyframes to hide the seam. Each dust
+layer is one tile of a few *irregularly placed* specks, repeated — the
+irregular positions inside the tile are what stop it reading as the grid
+it technically is, and each travels exactly one tile so it loops
+seamlessly.
 
 Two rules keep it cheap enough to run on a phone:
 
@@ -165,8 +178,9 @@ Two rules keep it cheap enough to run on a phone:
   expensive things you can ask a browser to do continuously.
 
 The grid tile is 64px and the drift is exactly one tile, so the loop wraps
-with no visible jump. Below 700px the third pool is dropped — one less
-composited layer, and it sat mostly off-screen at that width anyway.
+with no visible jump. Below 700px the third pool and the far dust layer are dropped — two
+fewer composited layers on the device least able to afford them, and the
+pool sat mostly off-screen at that width anyway.
 
 `prefers-reduced-motion` already collapses every animation duration
 globally, which freezes these where they stand: the layers stay, the

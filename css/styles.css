@@ -72,6 +72,8 @@ html:not([data-mode='day']) body[data-theme='light'] {
   --haze-warm: rgba(255, 216, 77, .11);
   --haze-cool: rgba(96, 132, 198, .13);
   --haze-soft: rgba(255, 216, 77, .07);
+  --dust:  rgba(255, 255, 255, .22);
+  --beam:  rgba(255, 216, 77, .05);
   --grain:  .055;
   color-scheme: dark;
 }
@@ -90,6 +92,8 @@ html:not([data-mode='day']) body[data-theme='dark'] {
   --haze-warm: rgba(255, 216, 77, .1);
   --haze-cool: rgba(96, 132, 198, .12);
   --haze-soft: rgba(255, 216, 77, .06);
+  --dust:  rgba(255, 255, 255, .2);
+  --beam:  rgba(255, 216, 77, .045);
   --grain:  .07;
   color-scheme: dark;
 }
@@ -108,6 +112,8 @@ html:not([data-mode='day']) body[data-theme='accent'] {
   --haze-warm: rgba(255, 216, 77, .13);
   --haze-cool: rgba(150, 120, 40, .1);
   --haze-soft: rgba(255, 216, 77, .08);
+  --dust:  rgba(255, 232, 160, .24);
+  --beam:  rgba(255, 216, 77, .07);
   --grain:  .06;
   color-scheme: dark;
 }
@@ -127,6 +133,8 @@ html[data-mode='day'] body[data-theme='light'] {
   --haze-warm: rgba(201, 150, 10, .13);
   --haze-cool: rgba(70, 100, 160, .1);
   --haze-soft: rgba(201, 150, 10, .08);
+  --dust:  rgba(20, 20, 15, .16);
+  --beam:  rgba(201, 150, 10, .07);
   --grain:  .03;
   color-scheme: light;
 }
@@ -147,6 +155,8 @@ html[data-mode='day'] body[data-theme='dark'] {
   --haze-warm: rgba(185, 138, 8, .12);
   --haze-cool: rgba(70, 100, 160, .09);
   --haze-soft: rgba(185, 138, 8, .07);
+  --dust:  rgba(20, 20, 15, .18);
+  --beam:  rgba(185, 138, 8, .07);
   --grain:  .035;
   color-scheme: light;
 }
@@ -165,6 +175,8 @@ html[data-mode='day'] body[data-theme='accent'] {
   --haze-warm: rgba(217, 164, 0, .16);
   --haze-cool: rgba(150, 120, 40, .1);
   --haze-soft: rgba(217, 164, 0, .1);
+  --dust:  rgba(23, 19, 8, .16);
+  --beam:  rgba(217, 164, 0, .09);
   --grain:  .035;
   color-scheme: light;
 }
@@ -271,6 +283,64 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @keyframes haze-3 {
   0%, 100% { transform: translate3d(0, 0, 0) scale(.95); }
   50%      { transform: translate3d(11vmax, -13vmax, 0) scale(1.22); }
+}
+
+/* A searchlight crossing the frame. It starts and ends well outside
+   the viewport, so the loop restart is never seen and no opacity
+   keyframes are needed to hide it. */
+.aura__beam {
+  position: absolute;
+  top: -60%;
+  left: 0;
+  width: 34%;
+  height: 220%;
+  background: linear-gradient(90deg, transparent 0%, var(--beam) 50%, transparent 100%);
+  will-change: transform;
+  animation: beam-sweep 27s linear infinite;
+}
+@keyframes beam-sweep {
+  from { transform: rotate(16deg) translate3d(-70vw, 0, 0); }
+  to   { transform: rotate(16deg) translate3d(180vw, 0, 0); }
+}
+
+/* Dust in the light. Each layer is one tile of five irregularly
+   placed specks, repeated — irregular positions inside the tile stop
+   it reading as the grid it technically is. The two layers drift at
+   different speeds, which is what makes it feel like depth rather
+   than a flat texture. Each travels exactly one tile, so it loops
+   without a seam. */
+.aura__dust {
+  position: absolute;
+  inset: -280px 0;
+  will-change: transform;
+}
+.aura__dust--near {
+  background-image:
+    radial-gradient(circle at 17% 23%, var(--dust) 1.3px, transparent 1.4px),
+    radial-gradient(circle at 68% 41%, var(--dust) 1px,   transparent 1.1px),
+    radial-gradient(circle at 39% 77%, var(--dust) 1.5px, transparent 1.6px),
+    radial-gradient(circle at 86% 88%, var(--dust) 1px,   transparent 1.1px),
+    radial-gradient(circle at 54% 9%,  var(--dust) 1.2px, transparent 1.3px);
+  background-size: 280px 280px;
+  animation: dust-near 34s linear infinite;
+}
+.aura__dust--far {
+  opacity: .55;
+  background-image:
+    radial-gradient(circle at 8% 61%,  var(--dust) 1px, transparent 1.1px),
+    radial-gradient(circle at 44% 28%, var(--dust) 1px, transparent 1.1px),
+    radial-gradient(circle at 77% 66%, var(--dust) 1px, transparent 1.1px),
+    radial-gradient(circle at 29% 94%, var(--dust) 1px, transparent 1.1px);
+  background-size: 190px 190px;
+  animation: dust-far 58s linear infinite;
+}
+@keyframes dust-near {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-40px, -280px, 0); }
+}
+@keyframes dust-far {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(26px, -190px, 0); }
 }
 
 /* the grid tile is 64px, and the drift is exactly one tile, so the
@@ -1522,7 +1592,8 @@ html[data-mode='day'] .nav__mode-icon {
 @media (max-width: 700px) {
   /* one less composited layer on a phone; two pools still read as
      movement and the third was mostly off-screen anyway */
-  .aura__haze--3 { display: none; }
+  .aura__haze--3,
+  .aura__dust--far { display: none; }
   .aura__grid { opacity: .35; }
 
   .nav__links { display: none; }
