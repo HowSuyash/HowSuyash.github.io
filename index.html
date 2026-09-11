@@ -28,7 +28,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
 <!-- bump ?v= whenever css/js change so no browser can serve a stale copy -->
-<link rel="stylesheet" href="css/styles.css?v=5" />
+<link rel="stylesheet" href="css/styles.css?v=6" />
 
 <script>document.documentElement.classList.add('js');</script>
 </head>
@@ -81,10 +81,15 @@
         </p>
       </div>
 
-      <!-- EDIT: replace portrait.svg with your own image — see README -->
+      <!-- The cowl sits on top; the real photo underneath is revealed
+           through a circular mask that follows the cursor. On touch
+           there is no cursor, so the photo shows plainly instead. -->
       <figure class="hero__portrait" data-portrait>
-        <img src="assets/portrait.svg" alt="Suyash Shukla in a Batman costume" width="400" height="500" />
-        <figcaption aria-hidden="true">◆ after hours</figcaption>
+        <img class="hero__portrait-shot" src="assets/portrait.jpg" width="1000" height="1250"
+             alt="Suyash Shukla" />
+        <img class="hero__portrait-cowl" src="assets/portrait.svg" width="400" height="500"
+             alt="" aria-hidden="true" />
+        <figcaption aria-hidden="true">◆ hover to unmask</figcaption>
       </figure>
 
     </div>
@@ -360,6 +365,6 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="js/main.js?v=5"></script>
+<script src="js/main.js?v=6"></script>
 </body>
 </html>

@@ -14,7 +14,8 @@ portfolio/
 ├── js/main.js               the scroll engine
 ├── assets/
 │   ├── favicon.svg
-│   ├── portrait.svg         <- PLACEHOLDER, replace with your photo
+│   ├── portrait.jpg         the real photo, revealed on hover
+│   ├── portrait.svg         the cowl that sits over it
 │   ├── project-01..03.jpg   project screenshots
 │   ├── resume.pdf           the real CV
 │   ├── resume-preview.png   page 1, rendered  (regenerate — see below)
@@ -69,9 +70,7 @@ Everything is in `index.html`, top to bottom.
 
 Content is complete. Two optional extras:
 
-| What | Where |
-|---|---|
-| Your real photo | `assets/portrait.svg` is still a hand-drawn placeholder — see below |
+Nothing outstanding.
 
 Regenerate `assets/og-image.jpg` after any visual change to the hero, or
 the link preview will show the old design:
@@ -220,66 +219,39 @@ static font the letters simply sit at their rest weight and nothing moves.
 The effect is skipped entirely on touch devices and under
 `prefers-reduced-motion`.
 
-### The hero portrait  ← replace this
+### The hero portrait
 
-`assets/portrait.svg` is a **placeholder** I drew by hand — a Batman cowl
-silhouette, not you. Swap it for a real image.
+Two stacked layers inside `.hero__portrait`:
 
-**1. Generate it.** To keep your own face, upload a clear photo of yourself
-to an image tool that edits from a reference — ChatGPT, Google Gemini,
-Midjourney (`--cref <photo url>`), or Photoshop generative fill. Prompt:
+| Layer | File | Role |
+|---|---|---|
+| `.hero__portrait-cowl` | `assets/portrait.svg` | the hand-drawn cowl, on top, what you see at rest |
+| `.hero__portrait-shot` | `assets/portrait.jpg` | the real photo underneath |
 
-> Cinematic portrait of the person in this photo wearing a matte black
-> Batman cowl and armoured suit. Head and shoulders, three-quarter angle,
-> looking just off camera, jaw and mouth visible below the cowl. Hard rim
-> light from the left in electric lime-yellow (#ccff00), deep near-black
-> background (#09090a). High contrast, sharp cowl texture, subtle film
-> grain, shallow depth of field. Vertical 4:5 crop. Keep the face
-> recognisable.
+The photo carries a radial `mask-image` whose radius is `--r`. At rest
+`--r` is `0px`, so the photo is masked away entirely and only the cowl
+shows. On hover the radius opens to `165px`, cutting a moving window
+through to the photo. JS does nothing but report the cursor position
+inside the frame as `--mx` / `--my`; CSS owns the radius, which is why
+`:hover` can drive it and a media query can switch the whole thing off.
 
-Text-to-image alone will not look like you — it needs your photo as input.
+`--r` and `--ring` are registered with `@property` as `<length>` so they
+can be *transitioned* — an unregistered custom property jumps instead of
+animating.
 
-**2. Crop it 4:5 vertical** (e.g. 800 × 1000). The frame is `aspect-ratio: 4/5`
-with `object-fit: cover`, so any other ratio gets cropped, not squashed.
-Keep your face in the upper-middle third.
+**Touch devices get the photo, not the cowl.** There is no cursor to open
+the mask, so under `(hover: none), (pointer: coarse)` the cowl is hidden
+and the photo shows plainly. Worth keeping: a recruiter on a phone should
+see a face.
 
-**3. Drop it in** as `assets/portrait.jpg` (or `.webp` — smaller), then update
-one line in `index.html`:
+To change the size of the reveal, edit the two `165px` values together
+(`.hero__portrait:hover .hero__portrait-shot` and `:hover::before`) — they
+are the mask radius and the ring radius, and they must match.
 
-```html
-<img src="assets/portrait.jpg" alt="Suyash Shukla in a Batman costume" width="800" height="1000" />
-```
-
-Update the `alt` text to describe the real image, and change the
-`<figcaption>` from `◆ after hours` to whatever you want on hover.
-
-**Size and position** — the hero is a two-column grid: name on the left,
-portrait filling the right column. Its width is the column width, set in
-`.hero__inner`:
-
-```css
-grid-template-columns: minmax(0, 1fr) clamp(230px, 34vw, 520px);
-                                      ^^^^^^^^^^^^^^^^^^^^^^^^^
-```
-
-Raise `34vw` / `520px` to make it bigger, lower them to make it smaller.
-The frame holds `aspect-ratio: 4/5` with a `max-height: 76svh` guard so it
-cannot run off a short screen — when that guard bites, `object-fit: cover`
-crops instead of letterboxing.
-
-Below 900px the grid collapses to one column and the portrait drops under
-the name at `min(70%, 340px)`; below 700px, `min(82%, 300px)`.
-
-The image is 65% desaturated at rest and goes full colour on hover, with a
-lime ring and the caption sliding up. To make it colour all the time, delete
-the `filter` line in `.hero__portrait img`.
-
-It also tilts toward the cursor — `js/main.js` section 4b. `pcx * 22` /
-`pcy * 16` are the drift in pixels; `pcx * 11` / `pcy * 8` are the tilt in
-degrees. Angles are kept low deliberately: the same rotation that reads as
-subtle on a small chip looks violent on a panel this size. The 3D comes
-from `perspective: 1200px` on `.hero__inner`. Delete the block to pin it
-still.
+**Replacing the photo:** crop 4:5, save as `assets/portrait.jpg`, and
+update `width`/`height` on the `<img>`. `object-position: 50% 20%` keeps
+the face in frame when the `max-height` guard crops the box on short
+screens.
 
 ### Real project screenshots
 

@@ -160,6 +160,24 @@
   }
 
   /* ==========================================================
+     4b-ii. PORTRAIT UNMASK
+     The cowl sits over the real photo; a radial mask on the photo
+     opens around the cursor. CSS owns the radius (so :hover drives
+     it and touch devices can opt out wholesale) — JS only reports
+     where the pointer is inside the frame.
+
+     Coordinates come from the element's own rect rather than
+     offsetX/offsetY, which is unreliable on a 3D-transformed box.
+     ========================================================== */
+  if (portrait && finePointer && !reduceMotion) {
+    portrait.addEventListener('pointermove', function (e) {
+      var r = portrait.getBoundingClientRect();
+      portrait.style.setProperty('--mx', (e.clientX - r.left).toFixed(1) + 'px');
+      portrait.style.setProperty('--my', (e.clientY - r.top).toFixed(1) + 'px');
+    }, { passive: true });
+  }
+
+  /* ==========================================================
      4c. VARIABLE-FONT PROXIMITY  —  [data-vft]
      Each letter becomes its own element, then interpolates its
      'wght' and 'wdth' axes by how near the cursor is. The name

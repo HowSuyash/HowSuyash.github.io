@@ -433,16 +433,82 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 @keyframes portrait-in { from { clip-path: inset(0 0 100% 0); } }
 
-.hero__portrait img {
+/* two stacked layers: the cowl on top, the real photo beneath */
+.hero__portrait-shot,
+.hero__portrait-cowl {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* lighter desaturation than a bright page needs — on near-black
-     a heavy grey filter just sinks the image into the background */
-  filter: grayscale(.3) contrast(1.08);
-  transition: filter .55s var(--ease), transform .8s var(--ease);
 }
-.hero__portrait:hover img { filter: none; transform: scale(1.08); }
+
+.hero__portrait-cowl { z-index: 1; }
+
+/* --r is the reveal radius, --mx/--my the cursor position inside the
+   frame (written by JS). At rest the radius is 0, so the mask hides
+   the photo completely and only the cowl shows. */
+@property --r {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+.hero__portrait-shot {
+  z-index: 2;
+  --r: 0px;
+  object-position: 50% 20%;
+  filter: grayscale(.25) contrast(1.06);
+  -webkit-mask-image: radial-gradient(circle var(--r) at var(--mx, 50%) var(--my, 50%),
+                      #000 62%, transparent 100%);
+          mask-image: radial-gradient(circle var(--r) at var(--mx, 50%) var(--my, 50%),
+                      #000 62%, transparent 100%);
+  transition: --r .45s var(--ease), filter .55s var(--ease);
+}
+.hero__portrait:hover .hero__portrait-shot {
+  --r: 165px;
+  filter: none;
+}
+
+/* A faint ring of accent at the edge of the reveal. The stops must
+   close with a transparent one: a radial-gradient's final stop
+   extends outward forever, so ending on the accent floods the whole
+   frame instead of drawing a ring.
+   --ring is registered so it animates in step with --r. */
+@property --ring {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+.hero__portrait::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  --ring: 0px;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%),
+              transparent 0,
+              transparent calc(var(--ring) - 1px),
+              color-mix(in srgb, var(--accent-raw) 60%, transparent) var(--ring),
+              transparent calc(var(--ring) + 2px));
+  transition: opacity .45s var(--ease), --ring .45s var(--ease);
+}
+.hero__portrait:hover::before { opacity: 1; --ring: 165px; }
+
+/* No cursor to follow on touch, so the mask would never open —
+   drop the cowl and show the photo plainly. */
+@media (hover: none), (pointer: coarse) {
+  .hero__portrait-cowl { display: none; }
+  .hero__portrait-shot {
+    -webkit-mask-image: none;
+            mask-image: none;
+    filter: none;
+  }
+  .hero__portrait::before { display: none; }
+}
 
 .hero__portrait::after {
   content: '';
