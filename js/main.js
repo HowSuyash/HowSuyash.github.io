@@ -169,12 +169,56 @@
      Coordinates come from the element's own rect rather than
      offsetX/offsetY, which is unreliable on a 3D-transformed box.
      ========================================================== */
-  if (portrait && finePointer && !reduceMotion) {
-    portrait.addEventListener('pointermove', function (e) {
+  if (portrait && !reduceMotion) {
+    var aimMask = function (clientX, clientY) {
       var r = portrait.getBoundingClientRect();
-      portrait.style.setProperty('--mx', (e.clientX - r.left).toFixed(1) + 'px');
-      portrait.style.setProperty('--my', (e.clientY - r.top).toFixed(1) + 'px');
-    }, { passive: true });
+      portrait.style.setProperty('--mx', (clientX - r.left).toFixed(1) + 'px');
+      portrait.style.setProperty('--my', (clientY - r.top).toFixed(1) + 'px');
+    };
+
+    if (finePointer) {
+      portrait.addEventListener('pointermove', function (e) {
+        aimMask(e.clientX, e.clientY);
+      }, { passive: true });
+
+    } else {
+      /* Touch has no hover, so the mask needs another way in. It
+         sweeps itself open the first time it scrolls into view —
+         nobody has to guess there is something to tap, and the face
+         is seen either way. After that a tap toggles it and a drag
+         moves the window. */
+      portrait.classList.add('can-unmask');
+
+      var isOpen = false;
+      var down = false;
+      var toggle = function (on) {
+        isOpen = on;
+        portrait.classList.toggle('is-open', on);
+      };
+
+      var revealed = false;
+      tasks.push(function () {
+        if (revealed) return;
+        var r = portrait.getBoundingClientRect();
+        if (r.top < vh * 0.75 && r.bottom > 0) {
+          revealed = true;
+          aimMask(r.left + r.width / 2, r.top + r.height * 0.34);
+          toggle(true);
+        }
+      });
+
+      portrait.addEventListener('pointerdown', function (e) {
+        down = true;
+        aimMask(e.clientX, e.clientY);
+        toggle(!isOpen);
+      });
+      portrait.addEventListener('pointermove', function (e) {
+        if (down) aimMask(e.clientX, e.clientY);
+      }, { passive: true });
+      var lift = function () { down = false; };
+      portrait.addEventListener('pointerup', lift);
+      portrait.addEventListener('pointercancel', lift);
+    }
   }
 
   /* ==========================================================
@@ -279,6 +323,67 @@
     });
 
     onResize.push(function () { vRects = null; });
+  }
+
+  /* Touch has no cursor to draw the wave with, so it runs itself once
+     — a single pass left to right, shortly after the letters have
+     finished arriving. One animation, then silence: a continuous loop
+     would re-lay-out the whole line every frame, which is exactly the
+     kind of thing that makes a cheap phone stutter.
+
+     Rects are measured once up front for the same reason as the
+     cursor version: letters move as they widen, and re-measuring a
+     moved letter feeds that movement back into its own proximity. */
+  if (vftLetters.length && vftHost && !finePointer && !reduceMotion) {
+    /* Driven from the frame loop that is already running rather than
+       a fresh requestAnimationFrame chain — one loop, one place that
+       can stall, and nothing to start up after the fact. */
+    /* the clock starts now, not on the first frame — a task that
+       needs two frames to get going will never start at all if the
+       loop only gets one */
+    var swStart = performance.now();
+    var swDone = false, swPts = null;
+    var swFrom = 0, swSpan = 0, swMid = 0;
+    var SW_WAIT = 1200;   // let the letters finish arriving first
+    var SW_DUR  = 1500;
+
+    tasks.push(function () {
+      if (swDone) return;
+
+      var elapsed = performance.now() - swStart;
+      if (elapsed < SW_WAIT) return;
+
+      if (!swPts) {
+        /* measured once: letters move as they widen, and re-measuring
+           a moved letter feeds that movement back into its own
+           proximity, which makes the line wobble */
+        swPts = vftLetters.map(function (l) {
+          var r = l.getBoundingClientRect();
+          return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+        });
+        var host = vftHost.getBoundingClientRect();
+        swFrom = host.left - RADIUS;
+        swSpan = host.width + RADIUS * 2;
+        swMid = host.top + host.height / 2;
+      }
+
+      var t = Math.min(1, (elapsed - SW_WAIT) / SW_DUR);
+      var x = swFrom + t * swSpan;
+
+      for (var i = 0; i < vftLetters.length; i++) {
+        var dx = x - swPts[i].x;
+        var dy = swMid - swPts[i].y;
+        var p = Math.max(0, 1 - Math.sqrt(dx * dx + dy * dy) / RADIUS);
+        vftLetters[i].style.fontVariationSettings = axes(
+          REST.wght + (HOT.wght - REST.wght) * p,
+          REST.wdth + (HOT.wdth - REST.wdth) * p
+        );
+      }
+
+      /* the pass ends past the last letter, so every one lands back
+         on REST on its own — no reset needed */
+      if (t >= 1) swDone = true;
+    });
   }
 
   /* ==========================================================

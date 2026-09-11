@@ -430,6 +430,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   transform-style: preserve-3d;
   will-change: transform;
   animation: portrait-in 1.15s var(--ease-out);
+  /* the reveal size. Mask and ring both read this, so they cannot
+     drift apart, and the breakpoints below only have to change it
+     once. It must be defined here: --r is a registered property, so
+     an undefined var() would silently fall back to its 0px initial
+     value and the mask would never open at all. */
+  --reveal: 165px;
 }
 @keyframes portrait-in { from { clip-path: inset(0 0 100% 0); } }
 
@@ -466,7 +472,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   transition: --r .45s var(--ease), filter .55s var(--ease);
 }
 .hero__portrait:hover .hero__portrait-shot {
-  --r: 165px;
+  --r: var(--reveal);
   filter: none;
 }
 
@@ -496,19 +502,29 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
               transparent calc(var(--ring) + 2px));
   transition: opacity .45s var(--ease), --ring .45s var(--ease);
 }
-.hero__portrait:hover::before { opacity: 1; --ring: 165px; }
+.hero__portrait:hover::before { opacity: 1; --ring: var(--reveal); }
 
-/* No cursor to follow on touch, so the mask would never open —
-   drop the cowl and show the photo plainly. */
+/* JS drives the reveal on touch, and adds .can-unmask once it is set
+   up to do so. Until then — no JS, old browser — the photo shows
+   plainly and the cowl is dropped, because a cowl nobody can open
+   would hide the face for good. */
 @media (hover: none), (pointer: coarse) {
-  .hero__portrait-cowl { display: none; }
-  .hero__portrait-shot {
+  .hero__portrait:not(.can-unmask) .hero__portrait-cowl { display: none; }
+  .hero__portrait:not(.can-unmask) .hero__portrait-shot {
     -webkit-mask-image: none;
             mask-image: none;
     filter: none;
   }
-  .hero__portrait::before { display: none; }
+  .hero__portrait:not(.can-unmask)::before { display: none; }
+
+  /* pan-y keeps vertical scrolling with the page; only sideways drag
+     is ours, so the portrait can never trap the user's scroll */
+  .hero__portrait.can-unmask { touch-action: pan-y; }
 }
+
+/* touch equivalent of :hover — JS toggles it */
+.hero__portrait.is-open .hero__portrait-shot { --r: var(--reveal); filter: none; }
+.hero__portrait.is-open::before { opacity: 1; --ring: var(--reveal); }
 
 .hero__portrait::after {
   content: '';
@@ -1272,6 +1288,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .hero__portrait {
     width: min(70%, 340px);
     max-height: 42svh;
+    --reveal: 105px;
   }
 
   .panel {
@@ -1292,7 +1309,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 @media (max-width: 700px) {
   .nav__links { display: none; }
-  .hero__portrait { width: min(82%, 300px); max-height: 38svh; }
+  .hero__portrait { width: min(82%, 300px); max-height: 38svh; --reveal: 92px; }
   .cursor { display: none; }
   .contact__socials { gap: 1rem 1.25rem; }
 }

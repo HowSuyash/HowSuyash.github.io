@@ -239,14 +239,26 @@ inside the frame as `--mx` / `--my`; CSS owns the radius, which is why
 can be *transitioned* — an unregistered custom property jumps instead of
 animating.
 
-**Touch devices get the photo, not the cowl.** There is no cursor to open
-the mask, so under `(hover: none), (pointer: coarse)` the cowl is hidden
-and the photo shows plainly. Worth keeping: a recruiter on a phone should
-see a face.
+**On touch** there is no hover to open the mask, so JS drives it instead:
+the portrait sweeps itself open the first time it scrolls into view, then
+a tap toggles it and a drag moves the window. `touch-action: pan-y` keeps
+vertical scrolling with the page, so the portrait can never trap a scroll.
 
-To change the size of the reveal, edit the two `165px` values together
-(`.hero__portrait:hover .hero__portrait-shot` and `:hover::before`) — they
-are the mask radius and the ring radius, and they must match.
+JS adds `.can-unmask` when it is set up to do this. Without it — no JS, old
+browser — the CSS drops the cowl and shows the photo plainly, because a
+cowl nobody can open would hide the face for good.
+
+The name has the same problem: no cursor to draw the wave with. On touch it
+runs one pass by itself, left to right, driven from the frame loop that is
+already running. One animation, then silence — a continuous loop would
+re-lay-out the whole line every frame, which is what makes a cheap phone
+stutter.
+
+**Reveal size** is one token, `--reveal` on `.hero__portrait` (165px, 105px
+under 900px, 92px under 700px). The mask and its ring both read it, so they
+cannot drift apart. It must stay defined: `--r` is a registered property, so
+an undefined `var()` silently falls back to its `0px` initial value and the
+mask never opens at all.
 
 **Replacing the photo:** crop 4:5, save as `assets/portrait.jpg`, and
 update `width`/`height` on the `<img>`. `object-position: 50% 20%` keeps
