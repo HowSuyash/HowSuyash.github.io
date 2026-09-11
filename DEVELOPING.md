@@ -104,6 +104,27 @@ update `width`/`height` on the `<img>` in `index.html` so the page does not
 shift while it loads. `tools/` is a dev script; it is not part of the
 deployed site.
 
+### Cache busting — read this before changing any asset
+
+`vercel.json` serves `/assets`, `/css` and `/js` with
+`max-age=31536000, immutable`. That tells the browser never to check
+again — not on a new deploy, not for a year. It is only safe because
+**every local reference in `index.html` carries a `?v=`**: the filenames
+never change, so the query string is the only thing that can signal a
+new file.
+
+After changing anything under `assets/`, `css/` or `js/`:
+
+```bash
+python tools/bump-version.py
+```
+
+It bumps every local reference together and leaves external URLs alone.
+Bumping `css` and `js` by hand while forgetting the images is exactly the
+mistake this prevents, and the symptom is nasty: the new file is live on
+the server, every check passes, and visitors keep seeing the old one for
+a year.
+
 ### Project previews
 
 `assets/project-01…03.jpg` are real screenshots, 1200x900, ~125 KB total.

@@ -15,20 +15,23 @@
 <!-- absolute, not relative: most social scrapers will not resolve a
      relative og:image and the preview comes out blank -->
 <meta property="og:url" content="https://howsuyash.github.io/" />
-<meta property="og:image" content="https://howsuyash.github.io/assets/og-image.jpg" />
+<meta property="og:image" content="https://howsuyash.github.io/assets/og-image.jpg?v=13" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
 
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="assets/favicon.svg?v=13" type="image/svg+xml" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <!-- Roboto Flex carries the wght + wdth axes the hero proximity effect animates -->
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-<!-- bump ?v= whenever css/js change so no browser can serve a stale copy -->
-<link rel="stylesheet" href="css/styles.css?v=12" />
+<!-- Every local asset carries ?v=. They are served immutable for a
+     year, so the query string is the only thing that can tell a
+     browser to fetch again. After changing anything under assets/,
+     css/ or js/, run: python tools/bump-version.py -->
+<link rel="stylesheet" href="css/styles.css?v=13" />
 
 <script>
   document.documentElement.classList.add('js');
@@ -115,9 +118,9 @@
            through a circular mask that follows the cursor. On touch
            there is no cursor, so the photo shows plainly instead. -->
       <figure class="hero__portrait" data-portrait>
-        <img class="hero__portrait-shot" src="assets/portrait.jpg" width="1000" height="1250"
+        <img class="hero__portrait-shot" src="assets/portrait.jpg?v=13" width="1000" height="1250"
              alt="Suyash Shukla" />
-        <img class="hero__portrait-cowl" src="assets/portrait.svg" width="400" height="500"
+        <img class="hero__portrait-cowl" src="assets/portrait.svg?v=13" width="400" height="500"
              alt="" aria-hidden="true" />
         <figcaption aria-hidden="true">◆ hover to unmask</figcaption>
       </figure>
@@ -159,7 +162,7 @@
 
         <article class="panel">
           <div class="panel__visual panel__visual--shot panel__visual--01">
-            <img src="assets/project-01.jpg" width="1200" height="900" loading="lazy"
+            <img src="assets/project-01.jpg?v=13" width="1200" height="900" loading="lazy"
                  alt="JanVaani live site — One Platform. Every Grievance. Resolved. — with complaint statistics" />
           </div>
           <div class="panel__info">
@@ -182,7 +185,7 @@
 
         <article class="panel">
           <div class="panel__visual panel__visual--shot panel__visual--02">
-            <img src="assets/project-02.jpg" width="1200" height="900" loading="lazy"
+            <img src="assets/project-02.jpg?v=13" width="1200" height="900" loading="lazy"
                  alt="Smart Attendance sign-in screen for the face emotion recognition system" />
           </div>
           <div class="panel__info">
@@ -204,7 +207,7 @@
 
         <article class="panel">
           <div class="panel__visual panel__visual--shot panel__visual--03">
-            <img src="assets/project-03.jpg" width="1200" height="900" loading="lazy"
+            <img src="assets/project-03.jpg?v=13" width="1200" height="900" loading="lazy"
                  alt="CryptoSim sign-in screen" />
           </div>
           <div class="panel__info">
@@ -339,20 +342,20 @@
         </ul>
 
         <div class="resume__actions">
-          <a class="resume__btn resume__btn--solid" href="assets/resume.pdf"
+          <a class="resume__btn resume__btn--solid" href="assets/resume.pdf?v=13"
              target="_blank" rel="noopener noreferrer" data-magnetic>
             Open PDF <i aria-hidden="true">↗</i>
           </a>
-          <a class="resume__btn" href="assets/resume.pdf"
+          <a class="resume__btn" href="assets/resume.pdf?v=13"
              download="Suyash-Shukla-Resume.pdf" data-magnetic>Download</a>
         </div>
       </div>
 
       <!-- the page image, not an <iframe>: PDF embeds render blank on most
            mobile browsers. Clicking opens the real PDF. -->
-      <a class="resume__paper" href="assets/resume.pdf" target="_blank" rel="noopener noreferrer"
+      <a class="resume__paper" href="assets/resume.pdf?v=13" target="_blank" rel="noopener noreferrer"
          aria-label="Open Suyash Shukla's résumé as a PDF">
-        <img src="assets/resume-preview.png" width="1191" height="1684" loading="lazy"
+        <img src="assets/resume-preview.png?v=13" width="1191" height="1684" loading="lazy"
              alt="First page of Suyash Shukla's résumé — summary, work experience, projects, education and skills" />
       </a>
     </div>
@@ -374,7 +377,7 @@
         <a href="https://github.com/HowSuyash" target="_blank" rel="noopener noreferrer">GitHub <i aria-hidden="true">↗</i></a>
         <a href="https://www.linkedin.com/in/suyash-shukla-b74b682a7/" target="_blank" rel="noopener noreferrer">LinkedIn <i aria-hidden="true">↗</i></a>
         <a href="tel:+916392852762">+91 63928 52762</a>
-        <a href="assets/resume.pdf" target="_blank" rel="noopener noreferrer">Résumé <i aria-hidden="true">↗</i></a>
+        <a href="assets/resume.pdf?v=13" target="_blank" rel="noopener noreferrer">Résumé <i aria-hidden="true">↗</i></a>
       </div>
     </div>
 
@@ -395,6 +398,6 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="js/main.js?v=12"></script>
+<script src="js/main.js?v=13"></script>
 </body>
 </html>
