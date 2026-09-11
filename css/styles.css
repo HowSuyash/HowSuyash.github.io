@@ -743,7 +743,9 @@ html[data-mode='day'] .nav__mode-icon {
   z-index: 2;
   --r: 0px;
   object-position: 50% 20%;
-  filter: grayscale(.25) contrast(1.06);
+  /* the noir treatment is baked into the file, so there is no colour
+     left to drain — the reveal lifts brightness instead */
+  filter: brightness(.82) contrast(1.04);
   -webkit-mask-image: radial-gradient(circle var(--r) at var(--mx, 50%) var(--my, 50%),
                       #000 62%, transparent 100%);
           mask-image: radial-gradient(circle var(--r) at var(--mx, 50%) var(--my, 50%),

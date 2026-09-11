@@ -202,11 +202,20 @@ Night is written as `html:not([data-mode='day'])` so it also matches "no
 attribute yet". An inline script in `<head>` sets the attribute before the
 first paint, so the page is never briefly the wrong colour.
 
-The default follows the OS (`prefers-color-scheme`). A stored choice wins
-over it, and storage is written **only on click** — someone who has never
-picked keeps following their system setting instead of being pinned to
-whatever it happened to be on their first visit. To make night the hard
-default regardless of the OS, drop the `matchMedia` line from that script.
+**Night is the default for everyone.** The OS preference is deliberately
+not consulted: the site is built around the dark palette, and a visitor on
+a light-mode laptop would otherwise never see it. The toggle in the nav is
+the way out, and a stored choice wins. Storage is written **only on
+click**, so nobody is pinned to a palette they never picked.
+
+To follow the OS instead, put this back in the head script before the
+`setAttribute`:
+
+```js
+if (m !== 'day' && m !== 'night') {
+  m = window.matchMedia('(prefers-color-scheme: light)').matches ? 'day' : 'night';
+}
+```
 
 **Two accent tokens.** `--accent` is the fill and is the same yellow in
 both modes, because it always carries dark ink on top. `--accent-line` is

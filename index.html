@@ -28,20 +28,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
 <!-- bump ?v= whenever css/js change so no browser can serve a stale copy -->
-<link rel="stylesheet" href="css/styles.css?v=11" />
+<link rel="stylesheet" href="css/styles.css?v=12" />
 
 <script>
   document.documentElement.classList.add('js');
   /* Runs before the first paint, so the page is never briefly the
-     wrong colour. Falls back to the OS preference, and to night if
-     storage is unavailable (private windows throw on access). */
+     wrong colour. Night is the default for everyone — the site is
+     built around it — and the OS preference is deliberately not
+     consulted; the toggle in the nav is the way out. A stored choice
+     still wins. Storage throws in some private windows, hence the
+     try. */
   (function () {
     var m = null;
     try { m = localStorage.getItem('mode'); } catch (e) {}
-    if (m !== 'day' && m !== 'night') {
-      m = window.matchMedia('(prefers-color-scheme: light)').matches ? 'day' : 'night';
-    }
-    document.documentElement.setAttribute('data-mode', m);
+    document.documentElement.setAttribute('data-mode', m === 'day' ? 'day' : 'night');
   })();
 </script>
 </head>
@@ -296,7 +296,7 @@
         </div>
       </li>
       <li class="exp__row">
-        <span class="exp__year">Jul 2025 — Aug 2026</span>
+        <span class="exp__year">Jul — Aug 2025</span>
         <div class="exp__body">
           <h2 class="exp__role">Blockchain Technology Intern</h2>
           <span class="exp__org">IBM</span>
@@ -395,6 +395,6 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="js/main.js?v=11"></script>
+<script src="js/main.js?v=12"></script>
 </body>
 </html>
