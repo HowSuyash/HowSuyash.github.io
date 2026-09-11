@@ -28,9 +28,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
 <!-- bump ?v= whenever css/js change so no browser can serve a stale copy -->
-<link rel="stylesheet" href="css/styles.css?v=9" />
+<link rel="stylesheet" href="css/styles.css?v=10" />
 
-<script>document.documentElement.classList.add('js');</script>
+<script>
+  document.documentElement.classList.add('js');
+  /* Runs before the first paint, so the page is never briefly the
+     wrong colour. Falls back to the OS preference, and to night if
+     storage is unavailable (private windows throw on access). */
+  (function () {
+    var m = null;
+    try { m = localStorage.getItem('mode'); } catch (e) {}
+    if (m !== 'day' && m !== 'night') {
+      m = window.matchMedia('(prefers-color-scheme: light)').matches ? 'day' : 'night';
+    }
+    document.documentElement.setAttribute('data-mode', m);
+  })();
+</script>
 </head>
 
 <body data-theme="light">
@@ -62,10 +75,15 @@
     <a href="#experience">Experience</a>
     <a href="#resume">Résumé</a>
   </nav>
-  <a class="nav__cta" href="#contact">
-    <span>Contact</span>
-    <span class="nav__dot" aria-hidden="true"></span>
-  </a>
+  <div class="nav__end">
+    <button class="nav__mode" type="button" data-mode-toggle aria-label="Switch theme">
+      <span class="nav__mode-icon" aria-hidden="true"></span>
+    </button>
+    <a class="nav__cta" href="#contact">
+      <span>Contact</span>
+      <span class="nav__dot" aria-hidden="true"></span>
+    </a>
+  </div>
 </header>
 
 <main id="top">
@@ -374,6 +392,6 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="js/main.js?v=9"></script>
+<script src="js/main.js?v=10"></script>
 </body>
 </html>

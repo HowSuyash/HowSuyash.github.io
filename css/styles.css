@@ -39,45 +39,134 @@
   --slate: #15151b;   /* raised charcoal */
 }
 
-/* ------------------------------------------ chapter themes -- */
-/* raised charcoal — the "lit" chapters */
-body[data-theme='light'] {
+/* =============================================================
+   TWO MODES x THREE CHAPTERS
+
+   data-mode on <html> is the palette (night or day). data-theme on
+   <body> is the chapter role, set by the scroll observer. The chapter
+   names are ROLES, not brightness: in night mode all three are shades
+   of dark, in day mode all three are shades of paper.
+
+   Night is written as :not([data-mode='day']) so it also matches "no
+   attribute yet" — the page is never briefly wrong before the script
+   that reads localStorage has run.
+
+   --accent is the FILL colour and is the same in both modes, because
+   it always carries dark ink on top of it. --accent-line is for text
+   and thin borders, where the same bright yellow on paper would be
+   unreadable and has to darken instead.
+   ============================================================= */
+
+/* ------------------------------------------------ night ----- */
+html:not([data-mode='day']) body[data-theme='light'] {
   --bg:     var(--slate);
   --ink:    var(--bone);
+  --name:   #fff;
   --muted:  rgba(244, 244, 246, .56);
   --line:   rgba(244, 244, 246, .15);
   --faint:  rgba(244, 244, 246, .06);
   --accent: var(--accent-raw);
+  --accent-line: var(--accent-raw);
   --accent-ink: var(--coal);
+  --glow:   var(--accent-raw);
+  --haze-warm: rgba(255, 216, 77, .11);
+  --haze-cool: rgba(96, 132, 198, .13);
+  --haze-soft: rgba(255, 216, 77, .07);
   --grain:  .055;
   color-scheme: dark;
 }
 
-/* deepest night */
-body[data-theme='dark'] {
+html:not([data-mode='day']) body[data-theme='dark'] {
   --bg:     var(--coal);
   --ink:    var(--bone);
+  --name:   #fff;
   --muted:  rgba(244, 244, 246, .5);
   --line:   rgba(244, 244, 246, .13);
   --faint:  rgba(244, 244, 246, .06);
   --accent: var(--accent-raw);
+  --accent-line: var(--accent-raw);
   --accent-ink: var(--coal);
+  --glow:   var(--accent-raw);
+  --haze-warm: rgba(255, 216, 77, .1);
+  --haze-cool: rgba(96, 132, 198, .12);
+  --haze-soft: rgba(255, 216, 77, .06);
   --grain:  .07;
   color-scheme: dark;
 }
 
-/* the finale. Still night, but warm-black with the bat-signal
-   burning behind the contact block — see .contact::before */
-body[data-theme='accent'] {
+html:not([data-mode='day']) body[data-theme='accent'] {
   --bg:     #0b0904;
   --ink:    var(--bone);
+  --name:   #fff;
   --muted:  rgba(244, 244, 246, .58);
   --line:   rgba(255, 216, 77, .22);
   --faint:  rgba(255, 216, 77, .08);
   --accent: var(--accent-raw);
+  --accent-line: var(--accent-raw);
   --accent-ink: var(--coal);
+  --glow:   var(--accent-raw);
+  --haze-warm: rgba(255, 216, 77, .13);
+  --haze-cool: rgba(150, 120, 40, .1);
+  --haze-soft: rgba(255, 216, 77, .08);
   --grain:  .06;
   color-scheme: dark;
+}
+
+/* -------------------------------------------------- day ----- */
+html[data-mode='day'] body[data-theme='light'] {
+  --bg:     #f4f2ec;
+  --ink:    #14140f;
+  --name:   #0d0d09;
+  --muted:  rgba(20, 20, 15, .6);
+  --line:   rgba(20, 20, 15, .16);
+  --faint:  rgba(20, 20, 15, .07);
+  --accent: var(--accent-raw);
+  --accent-line: #7a5a00;
+  --accent-ink: var(--coal);
+  --glow:   #c9960a;
+  --haze-warm: rgba(201, 150, 10, .13);
+  --haze-cool: rgba(70, 100, 160, .1);
+  --haze-soft: rgba(201, 150, 10, .08);
+  --grain:  .03;
+  color-scheme: light;
+}
+
+/* the chapters that go dark at night go DEEPER paper by day — the
+   rhythm is kept without flipping half the site back to black */
+html[data-mode='day'] body[data-theme='dark'] {
+  --bg:     #e5e1d6;
+  --ink:    #14140f;
+  --name:   #0d0d09;
+  --muted:  rgba(20, 20, 15, .62);
+  --line:   rgba(20, 20, 15, .18);
+  --faint:  rgba(20, 20, 15, .08);
+  --accent: var(--accent-raw);
+  --accent-line: #6f5200;
+  --accent-ink: var(--coal);
+  --glow:   #b98a08;
+  --haze-warm: rgba(185, 138, 8, .12);
+  --haze-cool: rgba(70, 100, 160, .09);
+  --haze-soft: rgba(185, 138, 8, .07);
+  --grain:  .035;
+  color-scheme: light;
+}
+
+html[data-mode='day'] body[data-theme='accent'] {
+  --bg:     #f9f1da;
+  --ink:    #171308;
+  --name:   #0d0b04;
+  --muted:  rgba(23, 19, 8, .64);
+  --line:   rgba(122, 90, 0, .26);
+  --faint:  rgba(122, 90, 0, .1);
+  --accent: var(--accent-raw);
+  --accent-line: #6a4e00;
+  --accent-ink: var(--coal);
+  --glow:   #d9a400;
+  --haze-warm: rgba(217, 164, 0, .16);
+  --haze-cool: rgba(150, 120, 40, .1);
+  --haze-soft: rgba(217, 164, 0, .1);
+  --grain:  .035;
+  color-scheme: light;
 }
 
 /* ---------------------------------------------- reset ------- */
@@ -108,7 +197,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 ::selection { background: var(--accent); color: var(--accent-ink); }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--accent-line);
   outline-offset: 4px;
   border-radius: 2px;
 }
@@ -155,25 +244,19 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .aura__haze--1 {
   top: -22vmax;
   left: -14vmax;
-  background: radial-gradient(circle,
-    color-mix(in srgb, var(--accent-raw) 11%, transparent) 0%,
-    transparent 62%);
+  background: radial-gradient(circle, var(--haze-warm) 0%, transparent 62%);
   animation: haze-1 46s ease-in-out infinite;
 }
 .aura__haze--2 {
   top: 24vmax;
   right: -20vmax;
-  background: radial-gradient(circle,
-    rgba(96, 132, 198, .13) 0%,
-    transparent 64%);
+  background: radial-gradient(circle, var(--haze-cool) 0%, transparent 64%);
   animation: haze-2 61s ease-in-out infinite;
 }
 .aura__haze--3 {
   bottom: -26vmax;
   left: 18vmax;
-  background: radial-gradient(circle,
-    color-mix(in srgb, var(--accent-raw) 7%, transparent) 0%,
-    transparent 60%);
+  background: radial-gradient(circle, var(--haze-soft) 0%, transparent 60%);
   animation: haze-3 53s ease-in-out infinite;
 }
 
@@ -316,6 +399,46 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   /* room for descenders and the apostrophe so nothing clips */
   padding-bottom: .12em;
   margin-bottom: -.12em;
+}
+
+/* ------------------------------------------- mode toggle ---- */
+.nav__end {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(.9rem, 2vw, 1.4rem);
+}
+
+.nav__mode {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 50%;
+  color: inherit;
+  transition: background-color .3s var(--ease);
+}
+.nav__mode:hover { background: var(--faint); }
+
+/* One circle, two shapes. At night an inset shadow in the page
+   colour bites a crescent out of it; by day it shrinks to a disc
+   with a ring around it. No icon files, and it recolours with the
+   chapter because it is drawn in currentColor. */
+.nav__mode-icon {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: currentColor;
+  transition: box-shadow .45s var(--ease), transform .45s var(--ease);
+}
+html:not([data-mode='day']) .nav__mode-icon {
+  box-shadow: inset -4px -2px 0 0 var(--bg);
+  transform: rotate(-20deg);
+}
+html[data-mode='day'] .nav__mode-icon {
+  box-shadow: 0 0 0 2px var(--bg), 0 0 0 3.5px currentColor;
+  transform: scale(.62);
 }
 
 /* ---------------------------------------------- nav --------- */
@@ -473,8 +596,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   text-transform: uppercase;
   font-weight: 700;
   font-variation-settings: 'wght' 700, 'wdth' 100;
-  /* pure white against the night, brighter than body ink */
-  color: #fff;
+  /* brighter than body ink in either mode */
+  color: var(--name);
   /* headroom: letters widen to wdth 145 under the cursor and must
      not push into the portrait column */
   max-width: 100%;
@@ -721,7 +844,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   white-space: nowrap;
   will-change: transform;
 }
-.ticker__track b { color: var(--accent); font-size: .6em; }
+.ticker__track b { color: var(--accent-line); font-size: .6em; }
 
 .ticker--big {
   border: 0;
@@ -881,7 +1004,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .panel__num {
   font-family: var(--font-mono);
   font-size: .75rem;
-  color: var(--accent);
+  color: var(--accent-line);
 }
 
 .panel__title {
@@ -927,7 +1050,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   border-bottom: 1px solid var(--line);
   transition: color .3s var(--ease), border-color .3s var(--ease);
 }
-.panel__links a:hover { color: var(--accent); border-color: var(--accent); }
+.panel__links a:hover { color: var(--accent-line); border-color: var(--accent-line); }
 .panel__links a i { font-style: normal; transition: transform .3s var(--ease); }
 .panel__links a:hover i { transform: translate(3px, -3px); }
 
@@ -1090,7 +1213,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .exp__org {
   font-family: var(--font-mono);
   font-size: .78rem;
-  color: var(--accent);
+  color: var(--accent-line);
 }
 .exp__desc {
   margin-top: .5rem;
@@ -1138,7 +1261,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-size: clamp(1.5rem, 3vw, 2.25rem);
   font-weight: 800;
   line-height: 1;
-  color: var(--accent);
+  color: var(--accent-line);
 }
 .resume__facts span {
   font-family: var(--font-mono);
@@ -1169,7 +1292,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   transition: background-color .3s var(--ease), color .3s var(--ease),
               border-color .3s var(--ease), transform .3s var(--ease);
 }
-.resume__btn:hover { border-color: var(--accent); transform: translateY(-2px); }
+.resume__btn:hover { border-color: var(--accent-line); transform: translateY(-2px); }
 .resume__btn--solid {
   background: var(--accent);
   border-color: var(--accent);
@@ -1177,7 +1300,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .resume__btn--solid:hover {
   background: transparent;
-  color: var(--accent);
+  color: var(--accent-line);
 }
 
 /* the sheet itself — a real page lying on the dark desk */
@@ -1210,8 +1333,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
      the beam sits behind the headline at any section height */
   transform: translate(-50%, -50%);
   background: radial-gradient(circle,
-    color-mix(in srgb, var(--accent-raw) 26%, transparent) 0%,
-    color-mix(in srgb, var(--accent-raw) 9%, transparent) 34%,
+    color-mix(in srgb, var(--glow) 26%, transparent) 0%,
+    color-mix(in srgb, var(--glow) 9%, transparent) 34%,
     transparent 64%);
   pointer-events: none;
   z-index: 0;

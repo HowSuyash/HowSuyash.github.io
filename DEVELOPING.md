@@ -177,6 +177,34 @@ colour stops. To slow it, raise the `46s` / `61s` / `53s` durations —
 keep them different, or the pools start moving in lockstep and the eye
 picks up the pattern.
 
+### Night and day
+
+`data-mode` on `<html>` is the palette; `data-theme` on `<body>` is the
+chapter role. The chapter names (`light` / `dark` / `accent`) are **roles,
+not brightness** — at night all three are shades of dark, by day all three
+are shades of paper.
+
+Night is written as `html:not([data-mode='day'])` so it also matches "no
+attribute yet". An inline script in `<head>` sets the attribute before the
+first paint, so the page is never briefly the wrong colour.
+
+The default follows the OS (`prefers-color-scheme`). A stored choice wins
+over it, and storage is written **only on click** — someone who has never
+picked keeps following their system setting instead of being pinned to
+whatever it happened to be on their first visit. To make night the hard
+default regardless of the OS, drop the `matchMedia` line from that script.
+
+**Two accent tokens.** `--accent` is the fill and is the same yellow in
+both modes, because it always carries dark ink on top. `--accent-line` is
+for text and thin borders, and darkens to an amber by day — the same
+bright yellow on paper is unreadable. Anything that paints accent *as
+text or a border* must use `--accent-line`.
+
+Every other palette value is a token too: `--name` (the hero name, a
+little brighter than body ink), `--glow` (the bat-signal), and
+`--haze-warm` / `--haze-cool` / `--haze-soft` for the drifting background.
+Both modes define the same fourteen.
+
 ### Change the accent
 
 `css/styles.css`, first block. One value:

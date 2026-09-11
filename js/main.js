@@ -706,6 +706,29 @@
     });
   }
 
+  /* ------------------------------------------ mode toggle ---- */
+  /* The head script has already picked a palette and put it on
+     <html>; this only flips it. Storage is written on click and not
+     on load, so someone who has never chosen keeps following their
+     OS setting instead of being pinned to whatever it was the first
+     time they visited. */
+  var modeBtn = $('[data-mode-toggle]');
+  if (modeBtn) {
+    var root = document.documentElement;
+    var labelMode = function () {
+      modeBtn.setAttribute('aria-label',
+        root.getAttribute('data-mode') === 'day' ? 'Switch to night theme' : 'Switch to day theme');
+    };
+    labelMode();
+
+    modeBtn.addEventListener('click', function () {
+      var next = root.getAttribute('data-mode') === 'day' ? 'night' : 'day';
+      root.setAttribute('data-mode', next);
+      labelMode();
+      try { localStorage.setItem('mode', next); } catch (e) {}
+    });
+  }
+
   /* ---------------------------------------------- misc ------- */
   var year = $('#year');
   if (year) year.textContent = String(new Date().getFullYear());
