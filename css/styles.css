@@ -25,7 +25,6 @@
   --font-display: 'Bricolage Grotesque', 'Inter Tight', system-ui, sans-serif;
   /* variable, carries wght + wdth axes — the hero proximity effect needs both */
   --font-flex:    'Roboto Flex', 'Bricolage Grotesque', system-ui, sans-serif;
-  --font-serif:   'Instrument Serif', Georgia, 'Times New Roman', serif;
   --font-body:    'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
@@ -368,15 +367,20 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   gap: clamp(1.25rem, 3vh, 2rem);
 }
 
-/* italic serif aside under the name */
+/* the descriptor under the name — body face, not a display one */
 .hero__since {
-  font-family: var(--font-serif);
-  font-size: clamp(.95rem, 1.3vw, 1.2rem);
-  line-height: 1.35;
+  font-size: clamp(.95rem, 1.2vw, 1.1rem);
+  line-height: 1.5;
   color: var(--muted);
   animation: fade-in .9s var(--ease-out);
 }
-.hero__since em { color: var(--ink); }
+/* <em> for the semantics, weight for the emphasis — an italic here
+   reads decorative next to the rest of the type */
+.hero__since em {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--ink);
+}
 
 /* ------------------------------------------- the headline --- */
 .hero__name {
@@ -564,10 +568,13 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
-  gap: .7rem;
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: clamp(.85rem, 1.1vw, 1.05rem);
+  gap: .7rem 1rem;
+  /* the same mono label treatment as the eyebrows and the nav, so
+     the status line reads as metadata rather than prose */
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
   color: var(--muted);
   animation: fade-in 1.35s var(--ease-out);
 }

@@ -185,12 +185,19 @@ Two variables in `:root`, plus the Google Fonts `<link>` in `<head>`:
 
 ```css
 --font-display: 'Bricolage Grotesque', ...;   /* headlines */
+--font-flex:    'Roboto Flex', ...;           /* the hero name only */
 --font-body:    'Inter', ...;                 /* paragraphs */
---font-mono:    'JetBrains Mono', ...;        /* labels */
+--font-mono:    'JetBrains Mono', ...;        /* labels and metadata */
 ```
 
+Four faces is already the ceiling. There was a fifth — Instrument Serif,
+italic, on the two lines under the name — and it was dropped: a decorative
+serif next to a grotesk and a mono reads as an accident rather than a
+choice. Those lines now use the body face and the mono label treatment,
+which is what the eyebrows and the nav already use.
+
 Display faces that suit this layout: `Anton`, `Syne`, `Archivo Expanded`,
-`Space Grotesk`, `Instrument Serif` for something softer.
+`Space Grotesk`.
 
 ### Tuning the cursor effect on the name
 
