@@ -126,6 +126,88 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .skip-link:focus { top: 1rem; }
 
+/* ------------------------------------------- night haze ----- */
+/* Sits between the page background and the content (z-index 0 vs 2).
+   Three soft pools of light drift across it and a faint grid slides
+   under them, so the page is never a flat slab of black.
+
+   Only `transform` is animated. Transforms are composited, so none of
+   this costs a layout or a paint per frame — which is what lets it run
+   on a phone without stuttering. No blur filters for the same reason:
+   the softness comes from the gradients themselves. */
+.aura {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.aura__haze {
+  position: absolute;
+  display: block;
+  width: 62vmax;
+  height: 62vmax;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+.aura__haze--1 {
+  top: -22vmax;
+  left: -14vmax;
+  background: radial-gradient(circle,
+    color-mix(in srgb, var(--accent-raw) 11%, transparent) 0%,
+    transparent 62%);
+  animation: haze-1 46s ease-in-out infinite;
+}
+.aura__haze--2 {
+  top: 24vmax;
+  right: -20vmax;
+  background: radial-gradient(circle,
+    rgba(96, 132, 198, .13) 0%,
+    transparent 64%);
+  animation: haze-2 61s ease-in-out infinite;
+}
+.aura__haze--3 {
+  bottom: -26vmax;
+  left: 18vmax;
+  background: radial-gradient(circle,
+    color-mix(in srgb, var(--accent-raw) 7%, transparent) 0%,
+    transparent 60%);
+  animation: haze-3 53s ease-in-out infinite;
+}
+
+@keyframes haze-1 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(14vmax, 9vmax, 0) scale(1.18); }
+}
+@keyframes haze-2 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.1); }
+  50%      { transform: translate3d(-17vmax, -11vmax, 0) scale(.92); }
+}
+@keyframes haze-3 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(.95); }
+  50%      { transform: translate3d(11vmax, -13vmax, 0) scale(1.22); }
+}
+
+/* the grid tile is 64px, and the drift is exactly one tile, so the
+   loop is seamless with no jump at the wrap */
+.aura__grid {
+  position: absolute;
+  inset: -80px;
+  opacity: .5;
+  background-image:
+    linear-gradient(to right, var(--faint) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--faint) 1px, transparent 1px);
+  background-size: 64px 64px;
+  will-change: transform;
+  animation: grid-drift 36s linear infinite;
+}
+@keyframes grid-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(64px, 64px, 0); }
+}
+
 /* ------------------------------------------ fixed overlays -- */
 .grain {
   position: fixed;
@@ -1315,6 +1397,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 
 @media (max-width: 700px) {
+  /* one less composited layer on a phone; two pools still read as
+     movement and the third was mostly off-screen anyway */
+  .aura__haze--3 { display: none; }
+  .aura__grid { opacity: .35; }
+
   .nav__links { display: none; }
   .hero__portrait { width: min(82%, 300px); max-height: 38svh; --reveal: 92px; }
   .cursor { display: none; }
