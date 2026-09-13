@@ -109,6 +109,7 @@
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
         document.body.setAttribute('data-theme', entry.target.getAttribute('data-chapter'));
+        syncThemeColor();
       });
     }, { rootMargin: '-50% 0px -50% 0px', threshold: 0 });
 
@@ -394,9 +395,16 @@
   var reel = $('[data-reel]');
   var reelTrack = $('[data-reel-track]');
   var reelBar = $('[data-reel-bar]');
+  var reelTotal = $('[data-reel-total]');
   var reelCurrent = $('[data-reel-current]');
   var reelDistance = 0;
   var reelPanels = reelTrack ? $$('.panel', reelTrack).length : 0;
+
+  /* the total counts itself — add or remove a panel and the counter
+     follows, instead of being a number someone has to remember */
+  if (reelTotal && reelPanels) {
+    reelTotal.textContent = reelPanels < 10 ? '0' + reelPanels : String(reelPanels);
+  }
 
   function measureReel() {
     if (!reel || !reelTrack || reduceMotion) return;
@@ -712,6 +720,19 @@
      on load, so someone who has never chosen keeps following their
      OS setting instead of being pinned to whatever it was the first
      time they visited. */
+  /* The mobile browser chrome is tinted by <meta name="theme-color">.
+     It is read from --bg rather than hard-coded, so it stays right
+     for every chapter in both palettes without a second list of
+     colours to keep in step. --bg flips instantly; the painted
+     background is mid-transition for .7s after a change. */
+  var themeMeta = document.querySelector('meta[name="theme-color"]');
+  function syncThemeColor() {
+    if (!themeMeta) return;
+    var c = getComputedStyle(document.body).getPropertyValue('--bg').trim();
+    if (c) themeMeta.setAttribute('content', c);
+  }
+  syncThemeColor();
+
   var modeBtn = $('[data-mode-toggle]');
   if (modeBtn) {
     var root = document.documentElement;
@@ -725,6 +746,7 @@
       var next = root.getAttribute('data-mode') === 'day' ? 'night' : 'day';
       root.setAttribute('data-mode', next);
       labelMode();
+      syncThemeColor();
       try { localStorage.setItem('mode', next); } catch (e) {}
     });
   }

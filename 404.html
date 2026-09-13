@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Not found — Suyash Shukla</title>
+<meta name="robots" content="noindex" />
+<link rel="icon" href="assets/favicon.svg?v=15" type="image/svg+xml" />
+<meta name="theme-color" content="#15151b" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/styles.css?v=15" />
+
+<script>
+  document.documentElement.classList.add('js');
+  (function () {
+    var m = null;
+    try { m = localStorage.getItem('mode'); } catch (e) {}
+    document.documentElement.setAttribute('data-mode', m === 'day' ? 'day' : 'night');
+  })();
+</script>
+</head>
+
+<body data-theme="light">
+
+<div class="aura" aria-hidden="true">
+  <i class="aura__haze aura__haze--1"></i>
+  <i class="aura__haze aura__haze--2"></i>
+  <i class="aura__haze aura__haze--3"></i>
+  <span class="aura__grid"></span>
+  <span class="aura__dust aura__dust--far"></span>
+  <span class="aura__dust aura__dust--near"></span>
+  <span class="aura__beam"></span>
+</div>
+<div class="grain" aria-hidden="true"></div>
+
+<main class="chapter lost">
+  <span class="eyebrow">Error 404</span>
+  <h1 class="lost__code">404</h1>
+  <p class="lost__text">
+    Nothing at this address. It was either moved, or it never existed.
+  </p>
+  <div class="lost__actions">
+    <a class="resume__btn resume__btn--solid" href="/">Back to the start</a>
+    <a class="resume__btn" href="/#work">See the work</a>
+  </div>
+</main>
+
+</body>
+</html>

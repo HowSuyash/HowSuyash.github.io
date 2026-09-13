@@ -162,12 +162,44 @@ link and the `data-copy` button).
 
 ### Adding or removing projects
 
-Add another `<article class="panel">` inside `.reel__track`. The pinned
-section measures the track and sets its own scroll height on load and on
-resize, so the horizontal distance is always exact — nothing to configure.
+Add another `<article class="panel">` inside `.reel__track`. Everything
+follows on its own: the pinned section measures the track and sets its own
+scroll height, and the `/ 04` total in `.reel__counter` counts the panels
+rather than being typed in.
 
-One thing is **not** automatic: the `/ 04` total in `.reel__counter`.
-Update that by hand.
+### Analytics
+
+Nothing is loaded until you set a code. Near the bottom of `index.html`:
+
+```js
+var CODE = '';                       // <- your goatcounter code
+```
+
+Sign up at [goatcounter.com](https://www.goatcounter.com) (free, no
+cookies, no consent banner) and paste the site code in. While it is empty
+the script returns immediately — no request, nothing broken.
+
+GoatCounter rather than Vercel's own analytics because Vercel only counts
+the `vercel.app` domain, and the canonical URL is the GitHub Pages one.
+
+### Other site files
+
+| File | Why |
+|---|---|
+| `404.html` | a wrong URL lands on the site's own page, not GitHub's grey one |
+| `robots.txt` | points crawlers at the sitemap |
+| `sitemap.xml` | one URL; update if pages are ever added |
+| `site.webmanifest` | "Add to Home Screen" gets the bat icon and the right colours |
+
+The `<meta name="theme-color">` that tints mobile browser chrome is kept in
+step by `syncThemeColor()` in `js/main.js`. It reads `--bg` rather than
+holding its own list of colours, so it is right for every chapter in both
+palettes — and it reads the token, not the painted background, because the
+painted one is mid-transition for .7s after any change.
+
+The JSON-LD block in `<head>` declares the page as a `Person`. That is what
+connects the site to the name in a search; keep `sameAs` and `knowsAbout`
+current when the links or the stack change.
 
 ### The animated background
 

@@ -1,0 +1,12 @@
+{
+  "name": "Suyash Shukla — Portfolio",
+  "short_name": "Suyash",
+  "description": "CS undergraduate working across web development, cloud computing and Java.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#08080a",
+  "theme_color": "#15151b",
+  "icons": [
+    { "src": "assets/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

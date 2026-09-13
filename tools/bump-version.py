@@ -18,7 +18,7 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PAGE = os.path.join(ROOT, "index.html")
+PAGES = [os.path.join(ROOT, f) for f in ("index.html", "404.html")]
 
 # local references only — never touch the Google Fonts URL or any other host
 REF = re.compile(
@@ -30,22 +30,26 @@ REF = re.compile(
 
 
 def main():
-    html = open(PAGE, encoding="utf-8").read()
+    pages = [p for p in PAGES if os.path.exists(p)]
 
-    seen = [int(v) for v in re.findall(r'\?v=(\d+)"', html)]
+    seen = []
+    for p in pages:
+        seen += [int(v) for v in re.findall(r'\?v=(\d+)"', open(p, encoding="utf-8").read())]
     nxt = (max(seen) + 1) if seen else 1
     if len(sys.argv) > 1:
         nxt = int(sys.argv[1])
 
-    out, n = REF.subn(lambda m: '%s?v=%d"' % (m.group(1), nxt), html)
-    open(PAGE, "w", encoding="utf-8").write(out)
+    for p in pages:
+        html = open(p, encoding="utf-8").read()
+        out, n = REF.subn(lambda m: '%s?v=%d"' % (m.group(1), nxt), html)
+        open(p, "w", encoding="utf-8").write(out)
+        print("%-12s %2d references -> ?v=%d" % (os.path.basename(p), n, nxt))
 
-    print("bumped %d references to ?v=%d" % (n, nxt))
-    stale = sorted(set(re.findall(r'"((?:assets|css|js)/[^"?]+)"', out)))
-    if stale:
-        print("STILL UNVERSIONED (fix the regex):")
-        for s in stale:
-            print("   " + s)
+        stale = sorted(set(re.findall(r'"((?:assets|css|js)/[^"?]+)"', out)))
+        if stale:
+            print("   STILL UNVERSIONED:")
+            for x in stale:
+                print("     " + x)
 
 
 if __name__ == "__main__":

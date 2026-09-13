@@ -15,12 +15,44 @@
 <!-- absolute, not relative: most social scrapers will not resolve a
      relative og:image and the preview comes out blank -->
 <meta property="og:url" content="https://howsuyash.github.io/" />
-<meta property="og:image" content="https://howsuyash.github.io/assets/og-image.jpg?v=13" />
+<meta property="og:image" content="https://howsuyash.github.io/assets/og-image.jpg?v=15" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Suyash Shukla's portfolio — his name in white over a dark page, beside a Batman cowl portrait" />
+<meta property="og:locale" content="en_IN" />
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://howsuyash.github.io/assets/og-image.jpg?v=15" />
 
-<link rel="icon" href="assets/favicon.svg?v=13" type="image/svg+xml" />
+<link rel="canonical" href="https://howsuyash.github.io/" />
+<!-- tints the browser chrome on mobile; kept in step with the toggle by main.js -->
+<meta name="theme-color" content="#15151b" />
+<link rel="manifest" href="site.webmanifest" />
+
+<!-- Tells search engines this page IS a person, not just a page about
+     one — which is what connects the site to the name in a search. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Suyash Shukla",
+  "url": "https://howsuyash.github.io/",
+  "image": "https://howsuyash.github.io/assets/og-image.jpg",
+  "jobTitle": "Web Developer",
+  "email": "mailto:suyashshukla0702@gmail.com",
+  "description": "CS undergraduate working across web development, cloud computing and Java.",
+  "sameAs": [
+    "https://github.com/HowSuyash",
+    "https://www.linkedin.com/in/suyash-shukla-b74b682a7/"
+  ],
+  "knowsAbout": ["HTML", "CSS", "JavaScript", "React", "Java", "AWS", "Flask", "Firebase", "REST APIs"],
+  "alumniOf": {
+    "@type": "CollegeOrUniversity",
+    "name": "ABES Engineering College"
+  }
+}
+</script>
+
+<link rel="icon" href="assets/favicon.svg?v=15" type="image/svg+xml" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -31,7 +63,7 @@
      year, so the query string is the only thing that can tell a
      browser to fetch again. After changing anything under assets/,
      css/ or js/, run: python tools/bump-version.py -->
-<link rel="stylesheet" href="css/styles.css?v=13" />
+<link rel="stylesheet" href="css/styles.css?v=15" />
 
 <script>
   document.documentElement.classList.add('js');
@@ -118,9 +150,9 @@
            through a circular mask that follows the cursor. On touch
            there is no cursor, so the photo shows plainly instead. -->
       <figure class="hero__portrait" data-portrait>
-        <img class="hero__portrait-shot" src="assets/portrait.jpg?v=13" width="1000" height="1250"
+        <img class="hero__portrait-shot" src="assets/portrait.jpg?v=15" width="1000" height="1250"
              alt="Suyash Shukla" />
-        <img class="hero__portrait-cowl" src="assets/portrait.svg?v=13" width="400" height="500"
+        <img class="hero__portrait-cowl" src="assets/portrait.svg?v=15" width="400" height="500"
              alt="" aria-hidden="true" />
         <figcaption aria-hidden="true">◆ hover to unmask</figcaption>
       </figure>
@@ -144,8 +176,9 @@
   <section class="chapter manifesto" data-chapter="dark" id="about">
     <span class="eyebrow">01 — Approach</span>
     <p class="manifesto__text" data-words>
-      I learn by building. Web development, cloud computing and Java, turned
-      into projects that solve real problems rather than toy demos.
+      I learn by shipping. A grievance platform that cut resolution time from
+      72 hours to 36. A classroom analytics stack running on a zero-cost cloud.
+      Hackathon weekends that still work months later.
     </p>
   </section>
 
@@ -155,14 +188,14 @@
 
       <div class="reel__head">
         <span class="eyebrow">02 — Selected work</span>
-        <span class="reel__counter"><b data-reel-current>01</b> / 04</span>
+        <span class="reel__counter"><b data-reel-current>01</b> / <span data-reel-total>04</span></span>
       </div>
 
       <div class="reel__track" data-reel-track>
 
         <article class="panel">
           <div class="panel__visual panel__visual--shot panel__visual--01">
-            <img src="assets/project-01.jpg?v=13" width="1200" height="900" loading="lazy"
+            <img src="assets/project-01.jpg?v=15" width="1200" height="900" loading="lazy"
                  alt="JanVaani live site — One Platform. Every Grievance. Resolved. — with complaint statistics" />
           </div>
           <div class="panel__info">
@@ -185,7 +218,7 @@
 
         <article class="panel">
           <div class="panel__visual panel__visual--shot panel__visual--02">
-            <img src="assets/project-02.jpg?v=13" width="1200" height="900" loading="lazy"
+            <img src="assets/project-02.jpg?v=15" width="1200" height="900" loading="lazy"
                  alt="Smart Attendance sign-in screen for the face emotion recognition system" />
           </div>
           <div class="panel__info">
@@ -207,7 +240,7 @@
 
         <article class="panel">
           <div class="panel__visual panel__visual--shot panel__visual--03">
-            <img src="assets/project-03.jpg?v=13" width="1200" height="900" loading="lazy"
+            <img src="assets/project-03.jpg?v=15" width="1200" height="900" loading="lazy"
                  alt="CryptoSim sign-in screen" />
           </div>
           <div class="panel__info">
@@ -256,25 +289,25 @@
       <li class="cap">
         <span class="cap__num">01</span>
         <h2 class="cap__title">Front-end development</h2>
-        <p class="cap__desc">HTML, CSS, JavaScript and React. Consuming REST APIs.</p>
+        <p class="cap__desc">HTML, CSS, JavaScript, React. Built JanVaani's entire interface — routing, ticket tracking, three languages — with no framework and no backend.</p>
         <i class="cap__arrow" aria-hidden="true">↗</i>
       </li>
       <li class="cap">
         <span class="cap__num">02</span>
         <h2 class="cap__title">Java</h2>
-        <p class="cap__desc">Data structures and algorithms, OOP, REST APIs.</p>
+        <p class="cap__desc">Data structures and algorithms, OOP, REST APIs. Where most of my problem-solving practice happens.</p>
         <i class="cap__arrow" aria-hidden="true">↗</i>
       </li>
       <li class="cap">
         <span class="cap__num">03</span>
         <h2 class="cap__title">Cloud computing</h2>
-        <p class="cap__desc">AWS Academy Graduate — Cloud Foundations and Cloud Architect.</p>
+        <p class="cap__desc">AWS Academy Graduate, Cloud Foundations and Architect. Smart Attendance runs on Firebase and Render at zero cost.</p>
         <i class="cap__arrow" aria-hidden="true">↗</i>
       </li>
       <li class="cap">
         <span class="cap__num">04</span>
         <h2 class="cap__title">Shipping end to end</h2>
-        <p class="cap__desc">Hackathon builds taken from idea to working demo, backend included.</p>
+        <p class="cap__desc">Idea to working demo in a hackathon weekend — backend, cloud architecture and dashboard included.</p>
         <i class="cap__arrow" aria-hidden="true">↗</i>
       </li>
     </ul>
@@ -342,20 +375,20 @@
         </ul>
 
         <div class="resume__actions">
-          <a class="resume__btn resume__btn--solid" href="assets/resume.pdf?v=13"
+          <a class="resume__btn resume__btn--solid" href="assets/resume.pdf?v=15"
              target="_blank" rel="noopener noreferrer" data-magnetic>
             Open PDF <i aria-hidden="true">↗</i>
           </a>
-          <a class="resume__btn" href="assets/resume.pdf?v=13"
+          <a class="resume__btn" href="assets/resume.pdf?v=15"
              download="Suyash-Shukla-Resume.pdf" data-magnetic>Download</a>
         </div>
       </div>
 
       <!-- the page image, not an <iframe>: PDF embeds render blank on most
            mobile browsers. Clicking opens the real PDF. -->
-      <a class="resume__paper" href="assets/resume.pdf?v=13" target="_blank" rel="noopener noreferrer"
+      <a class="resume__paper" href="assets/resume.pdf?v=15" target="_blank" rel="noopener noreferrer"
          aria-label="Open Suyash Shukla's résumé as a PDF">
-        <img src="assets/resume-preview.png?v=13" width="1191" height="1684" loading="lazy"
+        <img src="assets/resume-preview.png?v=15" width="1191" height="1684" loading="lazy"
              alt="First page of Suyash Shukla's résumé — summary, work experience, projects, education and skills" />
       </a>
     </div>
@@ -377,7 +410,7 @@
         <a href="https://github.com/HowSuyash" target="_blank" rel="noopener noreferrer">GitHub <i aria-hidden="true">↗</i></a>
         <a href="https://www.linkedin.com/in/suyash-shukla-b74b682a7/" target="_blank" rel="noopener noreferrer">LinkedIn <i aria-hidden="true">↗</i></a>
         <a href="tel:+916392852762">+91 63928 52762</a>
-        <a href="assets/resume.pdf?v=13" target="_blank" rel="noopener noreferrer">Résumé <i aria-hidden="true">↗</i></a>
+        <a href="assets/resume.pdf?v=15" target="_blank" rel="noopener noreferrer">Résumé <i aria-hidden="true">↗</i></a>
       </div>
     </div>
 
@@ -398,6 +431,26 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="js/main.js?v=13"></script>
+<!-- ========= EDIT: analytics =========
+     GoatCounter: free, no cookies, no consent banner needed, and it
+     works on both hosts (Vercel's own analytics only counts the
+     vercel.app domain, which is not the canonical URL).
+
+     Sign up at goatcounter.com, then put your site code below —
+     if it is "" nothing loads at all, so this is inert until you
+     fill it in. No broken request in the meantime. -->
+<script>
+  (function () {
+    var CODE = '';                       // <- your goatcounter code
+    if (!CODE) return;
+    var s = document.createElement('script');
+    s.async = true;
+    s.dataset.goatcounter = 'https://' + CODE + '.goatcounter.com/count';
+    s.src = '//gc.zgo.at/count.js';
+    document.head.appendChild(s);
+  })();
+</script>
+
+<script src="js/main.js?v=15"></script>
 </body>
 </html>

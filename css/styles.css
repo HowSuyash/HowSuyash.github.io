@@ -1506,6 +1506,38 @@ html[data-mode='day'] .nav__mode-icon {
 .contact__socials a i { font-style: normal; transition: transform .3s var(--ease); }
 .contact__socials a:hover i { transform: translate(3px, -3px); }
 
+/* ---------------------------------------------- 404 --------- */
+.lost {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: var(--maxw);
+  margin-inline: auto;
+}
+.lost__code {
+  margin: 1rem 0 0;
+  font-family: var(--font-flex);
+  font-size: clamp(5rem, 22vw, 16rem);
+  font-weight: 700;
+  font-variation-settings: 'wght' 700, 'wdth' 120;
+  line-height: .85;
+  letter-spacing: -.04em;
+  color: var(--name);
+}
+.lost__text {
+  max-width: 42ch;
+  margin-top: 1.5rem;
+  color: var(--muted);
+}
+.lost__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-top: 2.5rem;
+}
+
 /* ---------------------------------------------- footer ------ */
 .footer {
   position: relative;
