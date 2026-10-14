@@ -16,7 +16,8 @@ portfolio/
 │   ├── favicon.svg
 │   ├── portrait.jpg         the real photo, revealed on hover
 │   ├── portrait.svg         the cowl that sits over it
-│   ├── project-01..03.jpg   project screenshots
+│   ├── janvaani.jpg         project screenshots, named by project
+│   ├── smart-attendance.jpg   so reordering never means renaming
 │   ├── resume.pdf           the real CV
 │   ├── resume-preview.png   page 1, rendered  (regenerate — see below)
 │   └── og-image.jpg         1200x630 social preview
@@ -60,7 +61,7 @@ Everything is in `index.html`, top to bottom.
 | Availability / location line | `.hero__lang` |
 | Your photo | `.hero__portrait` — see below |
 | The one-line statement | `.manifesto__text` |
-| Projects | `.reel__track` — JanVaani, Smart Attendance, CryptoCurrency, GitHub |
+| Projects | `.reel__track` — Quenaire, JanVaani, Smart Attendance, GitHub |
 | Skills | `.caps__list` — four `<li class="cap">` |
 | Experience + education | `.exp__list` |
 | Résumé blurb + stats | `.resume__side` |
@@ -68,9 +69,13 @@ Everything is in `index.html`, top to bottom.
 
 ### Still to fill in
 
-Content is complete. Two optional extras:
+Content is complete. Two things are waiting on Quenaire itself:
 
-Nothing outstanding.
+- **A live link.** `www.quenaire.com` is still a parked domain, so the
+  panel links to the source only. Add a `Live site` link next to it
+  once the app is deployed.
+- **A real screenshot.** The panel shows a schematic for now — see
+  *Project previews* below for swapping one in.
 
 Regenerate `assets/og-image.jpg` after any visual change to the hero, or
 the link preview will show the old design:
@@ -104,6 +109,16 @@ update `width`/`height` on the `<img>` in `index.html` so the page does not
 shift while it loads. `tools/` is a dev script; it is not part of the
 deployed site.
 
+Check the PDF's links before dropping it in. In LaTeX,
+`\href{www.example.com}{...}` without `https://` exports as a *launch a
+file* action rather than a web link, and does nothing in a browser's PDF
+viewer. This one prints every link and its kind (`2` is a URL, `3` is
+the broken launch kind):
+
+```bash
+python -c "import pymupdf; [print(l['kind'], l.get('uri') or l.get('file')) for p in pymupdf.open('assets/resume.pdf') for l in p.get_links()]"
+```
+
 ### Cache busting — read this before changing any asset
 
 `vercel.json` serves `/assets`, `/css` and `/js` with
@@ -127,8 +142,9 @@ a year.
 
 ### Project previews
 
-`assets/project-01…03.jpg` are real screenshots, 1200x900, ~125 KB total.
-They were captured with headless Chrome:
+`assets/janvaani.jpg` and `assets/smart-attendance.jpg` are real
+screenshots, 1200x900, ~100 KB together. They were captured with headless
+Chrome:
 
 ```bash
 chrome --headless=new --window-size=1280,960        --screenshot=shot.png https://your-demo-url
@@ -153,6 +169,23 @@ so the top of the page always survives the crop).
 To swap one out, replace the file and keep the name. The gradient behind
 it stays as the loading colour. `.panel__visual--shot` switches off the
 decorative grid overlay so it does not sit on top of the screenshot.
+
+**Quenaire** has no public deployment yet, so its panel is a schematic
+written in markup (`.rag` in `styles.css`): a question, the three policy
+passages retrieved for it, and the drafted answer. It is sized in `cqh`
+units against the frame's height, so it fits at 4:3 and at the 16:10
+phone crop alike. To replace it with a real screenshot, the Quenaire
+repo already has a capture script — with `NEXT_PUBLIC_USE_MOCK_DATA=true`
+and `NEXT_PUBLIC_ALLOW_DEMO_LOGIN=true` in `frontend/.env.local`:
+
+```bash
+cd frontend && npm run dev          # one terminal
+npm run screenshots                 # another; writes to screenshots/
+```
+
+Crop the review queue or dashboard to 4:3, save it as
+`assets/quenaire.jpg`, and swap the `.panel__visual--rag` div for the
+same `panel__visual--shot` + `<img>` pattern the other two panels use.
 
 Your phone number is live on the page in `.contact__socials`. Delete that
 line if you would rather not have it scraped.
@@ -404,27 +437,6 @@ mask never opens at all.
 update `width`/`height` on the `<img>`. `object-position: 50% 20%` keeps
 the face in frame when the `max-height` guard crops the box on short
 screens.
-
-### Real project screenshots
-
-Panel visuals are CSS gradients, so nothing is broken by missing images.
-To use a real one, replace:
-
-```html
-<div class="panel__visual panel__visual--01" aria-hidden="true"><span>◈</span></div>
-```
-
-with:
-
-```html
-<img class="panel__visual" src="assets/project-01.png" alt="Orbit Analytics dashboard" />
-```
-
-and add to `styles.css`:
-
-```css
-img.panel__visual { object-fit: cover; }
-```
 
 ## Run it locally
 

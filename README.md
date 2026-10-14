@@ -16,8 +16,9 @@ near-black with a single accent carrying it.
 - **Hero** — the name is set in Roboto Flex, and every letter interpolates
   its `wght` and `wdth` axes by how close the cursor is, so the type swells
   under the pointer and settles as it leaves.
-- **Work** — a pinned section that scrolls sideways through three projects,
-  each with a real screenshot of the deployed site.
+- **Work** — a pinned section that scrolls sideways through three projects:
+  two with screenshots of the deployed site, and a schematic of Quenaire's
+  retrieval pipeline drawn in markup.
 - **Résumé** — page one of the PDF, rendered to an image and laid on the
   page like a sheet of paper.
 - **Contact** — email, links, and a marquee.

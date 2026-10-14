@@ -529,6 +529,25 @@ html[data-mode='day'] .nav__mode-icon {
 /* the nav inherits each chapter's ink colour, so it stays legible
    across every inversion without needing a background plate */
 
+/* ...except over something bright of its own: the white résumé sheet
+   scrolls under it and swallowed the links. A scrim in the page's own
+   colour, faded out by a mask, so it is invisible over the dark
+   chapters. background-COLOR plus a mask rather than a gradient
+   background, because a colour can transition with the chapter
+   change and a gradient cannot. */
+.nav::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 -1.75rem;
+  z-index: -1;
+  background-color: var(--bg);
+  opacity: .9;
+  -webkit-mask-image: linear-gradient(#000 45%, transparent);
+          mask-image: linear-gradient(#000 45%, transparent);
+  pointer-events: none;
+  transition: background-color .7s var(--ease);
+}
+
 .nav__brand {
   display: inline-flex;
   align-items: center;
@@ -1066,6 +1085,93 @@ html[data-mode='day'] .nav__mode-icon {
 }
 .panel:hover .panel__visual img { transform: scale(1.04); }
 
+/* Quenaire has no public deployment to screenshot, so its visual is a
+   small schematic of the product at work, written in markup. Fixed
+   colours, like the gradients: the card sits on the yellow panel in
+   both modes.
+
+   Sized in container units against the frame's HEIGHT (cqh), because
+   height is what runs out — the frame drops from 4:3 to 16:10 under
+   900px and is capped by max-height on short screens. Sized this way
+   the card always fits; sized by width it overflowed on phones.
+   `size` containment is safe here: the frame's height comes from
+   aspect-ratio, never from its content. */
+.panel__visual--rag { container-type: size; }
+.rag {
+  position: relative;
+  z-index: 1;                    /* above the ::after grid */
+  width: min(84cqw, 120cqh);
+  display: flex;
+  flex-direction: column;
+  gap: 2.8cqh;
+  padding: 5.5cqh 6cqh;
+  border-radius: 2cqh;
+  background: rgba(8, 8, 10, .92);
+  color: #f4f4f6;
+  box-shadow: 0 4cqh 10cqh rgba(0, 0, 0, .45);
+  font-family: var(--font-mono);
+  font-size: 3.3cqh;
+  line-height: 1.45;
+  transform: rotate(-2deg);
+  transition: transform .9s var(--ease);
+}
+.panel:hover .rag { transform: rotate(0deg) scale(1.03); }
+.rag b { font-weight: 500; color: #ffd84d; }
+.rag i, .rag em { font-style: normal; }
+
+.rag__head,
+.rag__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2cqh;
+  color: rgba(244, 244, 246, .5);
+}
+.rag__q {
+  font-family: var(--font-body);
+  font-size: 4.6cqh;
+  font-weight: 500;
+  line-height: 1.25;
+}
+.rag__hits { display: grid; gap: 1.2cqh; }
+.rag__hits li {
+  display: flex;
+  justify-content: space-between;
+  gap: 2cqh;
+  padding: 1.3cqh 2cqh;
+  border-left: 2px solid #ffd84d;
+  background: rgba(255, 255, 255, .05);
+}
+.rag__hits em {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: rgba(244, 244, 246, .78);
+}
+.rag__hits small { font-size: inherit; color: #ffd84d; }
+.rag__a {
+  font-family: var(--font-body);
+  font-size: 3.8cqh;
+  color: rgba(244, 244, 246, .86);
+}
+.rag__a b {
+  margin-right: .5em;
+  font-family: var(--font-mono);
+  font-size: .82em;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.rag__foot {
+  padding-top: 2.6cqh;
+  border-top: 1px solid rgba(244, 244, 246, .12);
+}
+.rag__foot b {
+  padding: .6cqh 2cqh;
+  border-radius: 100px;
+  background: #ffd84d;
+  color: #08080a;
+}
+
 .panel__info {
   display: flex;
   flex-direction: column;
@@ -1420,6 +1526,12 @@ html[data-mode='day'] .nav__mode-icon {
   justify-content: center;
   gap: clamp(2rem, 6vh, 4rem);
   padding-bottom: 0;
+  /* the beam is 130vw wide and pokes out both sides. body clips that
+     on desktop, but mobile Chrome widens the layout viewport to fit it
+     instead — the page zooms out and drags sideways. `clip`, not
+     `hidden`: horizontal only, so the glow still bleeds up into the
+     résumé chapter, and no scroll container is created. */
+  overflow-x: clip;
 }
 
 .contact__inner {
