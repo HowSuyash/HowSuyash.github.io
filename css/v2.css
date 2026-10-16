@@ -803,6 +803,9 @@ html.is-intro .intro,
   transition: transform 1.2s var(--ease);
 }
 .project:hover .project__visual img { transform: scale(1.04); }
+/* for a screenshot whose content is left-aligned: the frame is squarer
+   than the 4:3 shot, so a centred crop would cut its headline in half */
+.project__visual--left img { object-position: left top; }
 
 .project__info {
   display: flex;

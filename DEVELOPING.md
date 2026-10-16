@@ -33,8 +33,10 @@ portfolio/
 │   ├── portrait.jpg         the real photo (part 2 reveals it on hover)
 │   ├── portrait.svg         part 2's cowl that sits over it
 │   ├── portrait-particles.webp  the photo cut out, for the main page (generated)
-│   ├── janvaani.jpg         project screenshots, named by project
-│   ├── smart-attendance.jpg   so reordering never means renaming
+│   ├── attack-forecast.jpg  project screenshots, named by project
+│   ├── muhurat.jpg            so reordering never means renaming
+│   ├── janvaani.jpg           (the main page shows all four; part 2
+│   ├── smart-attendance.jpg    only the last two)
 │   ├── resume.pdf           the real CV
 │   ├── resume-preview.png   page 1, rendered  (regenerate — see below)
 │   ├── og-image-v2.jpg      1200x630 social preview, main page
@@ -192,6 +194,18 @@ fine. Pipe to `Out-Null` instead.
 Then cropped to 4:3 and saved as JPEG (the panel frame is
 `aspect-ratio: 4/3` with `object-fit: cover; object-position: top center`,
 so the top of the page always survives the crop).
+
+`attack-forecast.jpg` and `muhurat.jpg` (main page only) were captured the
+same way, ~110 KB each. Two things learned doing it:
+
+- **AttackForecast** is on Render's free tier and computes its forecast
+  after the page loads, which took about 90 seconds. Wait for the
+  "Rolling the world model forward…" spinner to go before capturing. Do
+  not use `--virtual-time-budget` on it either: the page keeps working in
+  the background and headless Chrome never returns.
+- **Muhurat**'s content is left-aligned, and the main page's card frame is
+  squarer than 4:3, so a centred crop cut its headline in half. Its frame
+  carries `project__visual--left`, which anchors the crop to the left edge.
 
 To swap one out, replace the file and keep the name. The gradient behind
 it stays as the loading colour. `.panel__visual--shot` switches off the
