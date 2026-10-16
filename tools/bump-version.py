@@ -1,4 +1,4 @@
-"""Bump the ?v= on every local asset reference in index.html.
+"""Bump the ?v= on every local asset reference, on every page.
 
     python tools/bump-version.py
 
@@ -18,12 +18,14 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PAGES = [os.path.join(ROOT, f) for f in ("index.html", "404.html")]
+# v2/ is part 2, a page one level down — it reaches the shared folders
+# through ../, so the pattern below allows for that
+PAGES = [os.path.join(ROOT, f) for f in ("index.html", "404.html", os.path.join("v2", "index.html"))]
 
 # local references only — never touch the Google Fonts URL or any other host
 REF = re.compile(
-    r'((?:src|href|content)="'
-    r'(?:https://howsuyash\.github\.io/)?'
+    r'((?:src|href|content|data-src)="'
+    r'(?:https://howsuyash\.github\.io/|(?:\.\./)+)?'
     r'(?:assets|css|js)/[^"?]+)'
     r'(\?v=\d+)?"'
 )
@@ -43,9 +45,9 @@ def main():
         html = open(p, encoding="utf-8").read()
         out, n = REF.subn(lambda m: '%s?v=%d"' % (m.group(1), nxt), html)
         open(p, "w", encoding="utf-8").write(out)
-        print("%-12s %2d references -> ?v=%d" % (os.path.basename(p), n, nxt))
+        print("%-14s %2d references -> ?v=%d" % (os.path.relpath(p, ROOT), n, nxt))
 
-        stale = sorted(set(re.findall(r'"((?:assets|css|js)/[^"?]+)"', out)))
+        stale = sorted(set(re.findall(r'"((?:\.\./)*(?:assets|css|js)/[^"?]+)"', out)))
         if stale:
             print("   STILL UNVERSIONED:")
             for x in stale:

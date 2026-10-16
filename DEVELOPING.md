@@ -12,17 +12,24 @@ portfolio/
 ├── index.html               all content lives here
 ├── css/styles.css           chapter themes + layout
 ├── js/main.js               the scroll engine
+├── v2/index.html            part 2 — see "Part 2" below
+├── css/v2.css               part 2's styles (shares nothing with part 1)
+├── js/v2.js                 part 2's intro, particles and scroll
 ├── assets/
 │   ├── favicon.svg
 │   ├── portrait.jpg         the real photo, revealed on hover
 │   ├── portrait.svg         the cowl that sits over it
+│   ├── portrait-particles.webp  the photo cut out, for part 2 (generated)
 │   ├── janvaani.jpg         project screenshots, named by project
 │   ├── smart-attendance.jpg   so reordering never means renaming
 │   ├── resume.pdf           the real CV
 │   ├── resume-preview.png   page 1, rendered  (regenerate — see below)
-│   └── og-image.jpg         1200x630 social preview
-├── tools/
-│   └── make-resume-preview.py   dev script, not deployed
+│   ├── og-image.jpg         1200x630 social preview
+│   └── og-image-v2.jpg      the same, for part 2
+├── tools/                   dev scripts, not deployed
+│   ├── make-resume-preview.py
+│   ├── make-particle-portrait.py
+│   └── bump-version.py
 └── README.md
 ```
 
@@ -124,9 +131,9 @@ python -c "import pymupdf; [print(l['kind'], l.get('uri') or l.get('file')) for 
 `vercel.json` serves `/assets`, `/css` and `/js` with
 `max-age=31536000, immutable`. That tells the browser never to check
 again — not on a new deploy, not for a year. It is only safe because
-**every local reference in `index.html` carries a `?v=`**: the filenames
-never change, so the query string is the only thing that can signal a
-new file.
+**every local reference carries a `?v=`** — in `index.html`, `404.html`
+and `v2/index.html`: the filenames never change, so the query string is
+the only thing that can signal a new file.
 
 After changing anything under `assets/`, `css/` or `js/`:
 
@@ -134,7 +141,8 @@ After changing anything under `assets/`, `css/` or `js/`:
 python tools/bump-version.py
 ```
 
-It bumps every local reference together and leaves external URLs alone.
+It bumps every local reference on all three pages together (including
+part 2's `../assets/...` paths) and leaves external URLs alone.
 Bumping `css` and `js` by hand while forgetting the images is exactly the
 mistake this prevents, and the symptom is nasty: the new file is live on
 the server, every check passes, and visitors keep seeing the old one for
@@ -437,6 +445,109 @@ mask never opens at all.
 update `width`/`height` on the `<img>`. `object-position: 50% 20%` keeps
 the face in frame when the `max-height` guard crops the box on short
 screens.
+
+## Part 2 — `v2/`
+
+A second page over the same content, after a particle-portrait intro.
+It lives at `/v2/` and has its own `css/v2.css` and `js/v2.js`; nothing
+is shared with part 1 except the images and the PDF, so either page can
+change without touching the other. They link to each other: "Part 1" in
+part 2's nav and footer.
+
+It reaches the shared folders through `../`, so serve the repo root —
+`python -m http.server 5173`, then <http://127.0.0.1:5173/v2/>.
+
+### The intro
+
+`js/v2.js` section 2. A dot drops and bounces; a bar lands on it to make
+"!"; the "!" tips left and knocks up **S U Y**, swings right for
+**A S H**, stands, then sinks away and the gap closes. **SHUKLA** then
+types itself on letter by letter; the full name grows, and moves onto
+the real hero title — measured, not guessed — before the stage is removed.
+
+Every beat is an `at(ms, ...)` call inside `run()`, all on one clock, so
+retiming is editing numbers. It runs about five and a half seconds.
+
+- **Skipping** — any key, click, wheel or touch jumps to the end.
+- **Skipped entirely** under reduced motion, and for deep links
+  (`/v2/#work` lands on the work).
+- **It cannot strand the page.** The curtain is a class, `is-intro`, set
+  by an inline script in `<head>` so it is down before the first paint.
+  That same script lifts it after four seconds unless `v2.js` has claimed
+  the intro, and `v2.js` lifts it itself under two seconds after the
+  intro should have ended, whatever happens.
+
+The letters are measured against Inter Black (`.intro__slot` notes the
+metrics), so the intro waits up to 1.5s for that font before starting.
+
+**The name.** In the reference this was modelled on, the "!" stands
+back up as the I of the name. SUYASH has no I, so here it sinks out
+instead and the two halves close up.
+
+**Changing the title.** The hero title is `.hero__word` in
+`v2/index.html`; `TITLE` near the top of `intro()` must match it exactly,
+in capitals. The intro turns SUYASH into `TITLE` one letter at a time and
+skips letters that already match, so any word works (it was PORTFOLIO
+once). If the new title is much shorter or longer, retune `--title` in
+`css/v2.css`, which is sized so "SUYASH SHUKLA" fits on one line.
+
+### The particle portrait
+
+`js/v2.js` section 1. `assets/portrait-particles.webp` is drawn at the
+size of the particle grid and every opaque pixel becomes one square,
+coloured from a twelve-step navy-to-white ramp by the photo's brightness
+plus a random nudge. The nudge is the mosaic.
+
+| Knob | Where | What it does |
+|---|---|---|
+| `PALETTE` | top of section 1 | the ramp; keep it dark → light |
+| `ROWS_WIDE` / `ROWS_NARROW` | top of section 1 | grid density: 210 rows is ~12.5k particles on desktop, 140 is ~5.5k on phones. Cost grows with the square |
+| `REPEL` | top of section 1 | px of cursor reach |
+| the `light` falloff | `buildParticles` | dims everything below the chest so the face carries the picture |
+
+It draws in device pixels, rounded, so squares stay crisp at any pixel
+ratio, and buckets particles by colour so `fillStyle` changes twelve
+times a frame instead of twelve thousand. The loop stops while the hero
+is off screen. On phones the cursor effect is off and the grid is
+coarser.
+
+**Replacing the photo.** Swap `assets/portrait.jpg` (part 1 uses it too),
+then regenerate the cut-out:
+
+```bash
+pip install rembg pillow
+python tools/make-particle-portrait.py
+python tools/bump-version.py
+```
+
+The first run downloads a ~170 MB model. The script also flattens the
+photo's side lighting with local contrast and a light sharpen — at ~45
+particles across a face, that is the difference between eyes and noise.
+
+**From `file://`** Chrome will not let a page read pixels from a local
+image, so there are no particles; the cut-out shows as a still instead.
+Serve the folder.
+
+### The rest of part 2
+
+| Effect | Where |
+|---|---|
+| Big chrome section words rise out of a mask | `[data-bigword]`, v2.js 4a |
+| "Intro" paragraph lights word by word | `[data-words]`, v2.js 4c |
+| Project cards stick and stack; the covered one shrinks | `[data-stack]`, v2.js 4d + `.project` |
+| Timeline rail fills as you read | `[data-timeline]`, v2.js 4e |
+| Skill cards glow under the cursor | `[data-glow]` |
+| Résumé page tilts toward the cursor | `[data-tilt]` |
+
+Hidden states only exist under classes the script adds (`is-armed`,
+`is-intro`), so without JavaScript every section is plain and visible.
+The portrait falls back to the cut-out as a tinted still.
+
+**Gradient text and tracking.** Every chrome heading uses
+`background-clip: text` with negative letter-spacing, which pushes the
+last letter's ink past the end of its box — and the gradient is only
+painted inside the box, so the letter gets shaved flat. Each of them
+carries a little `padding-right` for that. Keep it if you add one.
 
 ## Run it locally
 

@@ -23,6 +23,24 @@ near-black with a single accent carrying it.
   page like a sheet of paper.
 - **Contact** — email, links, and a marquee.
 
+## Part 2
+
+[`/v2/`](https://howsuyash.github.io/v2/) is a second cut of the same
+content, built around a particle portrait. Part 1 is untouched; the two
+link to each other.
+
+![Part 2](assets/og-image-v2.jpg)
+
+- **Intro** — a dot drops and bounces, a bar lands on it to make "!", and
+  the "!" tips left and right, knocking the name out letter by letter.
+  SHUKLA then types itself on, and the full name slides down into the hero.
+- **Portrait** — the photo, cut out and rebuilt from about twelve thousand
+  squares on a canvas. They gather on arrival, part around the cursor, and
+  blow away as the hero scrolls off.
+- **The rest** — words that light up as you read, stacked project cards,
+  a timeline that fills as you scroll, and a résumé page that tilts toward
+  the cursor.
+
 ## Running it
 
 Any static server:
@@ -46,4 +64,5 @@ cursor-driven effects are gated behind a fine pointer, so touch devices get
 the static layout.
 
 Deeper notes — palette, tuning the cursor effect, regenerating the résumé
-preview — are in [DEVELOPING.md](DEVELOPING.md).
+preview, and how part 2 is put together — are in
+[DEVELOPING.md](DEVELOPING.md).
