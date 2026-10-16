@@ -1,11 +1,11 @@
 {
   "name": "Suyash Shukla — Portfolio",
   "short_name": "Suyash",
-  "description": "CS undergraduate working across web development, cloud computing and Java.",
+  "description": "Web and AI developer and B.Tech CSE (Data Science) student.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#08080a",
-  "theme_color": "#15151b",
+  "background_color": "#050506",
+  "theme_color": "#050506",
   "icons": [
     { "src": "assets/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
   ]

@@ -4,28 +4,41 @@ Working notes for this site — how it is put together and what to change
 where. The short version is in [README.md](README.md).
 
 
-Static site. No build step, no dependencies, no `npm install`.
-Open `index.html` and it works.
+Static site. No build step, no dependencies, no `npm install`. Serve
+the repo root (see *Run it locally*) and it works.
+
+There are two pages, with the same content in two designs:
+
+| URL | Page | Styles + script | Link preview | Notes |
+|---|---|---|---|---|
+| `/` | `index.html` | `css/v2.css`, `js/v2.js` | `og-image-v2.jpg` | **the main page** — the particle portrait. See *The main page* below |
+| `/v2/` | `v2/index.html` | `css/styles.css`, `js/main.js` | `og-image.jpg` | **part 2** — the first design, the Batman one. Everything from *The idea* to *The hero portrait*, and *How the motion works* onward |
+
+The `v2` in `v2.css`, `v2.js` and `og-image-v2.jpg` is the order the
+designs were built in — the particle page came second — not the URL.
+The particle page later became the main one and the first design moved
+to `/v2/`; the files kept their names. The two pages share nothing but
+`assets/`, and link to each other ("Part 2" / "Part 1").
 
 ```
 portfolio/
-├── index.html               all content lives here
-├── css/styles.css           chapter themes + layout
-├── js/main.js               the scroll engine
-├── v2/index.html            part 2 — see "Part 2" below
-├── css/v2.css               part 2's styles (shares nothing with part 1)
-├── js/v2.js                 part 2's intro, particles and scroll
-├── assets/
+├── index.html               the main page (particle portrait)
+├── css/v2.css               its styles
+├── js/v2.js                 its intro, particles and scroll
+├── v2/index.html            part 2 (the first design)
+├── css/styles.css           part 2's chapter themes + layout
+├── js/main.js               part 2's scroll engine
+├── assets/                  shared by both pages
 │   ├── favicon.svg
-│   ├── portrait.jpg         the real photo, revealed on hover
-│   ├── portrait.svg         the cowl that sits over it
-│   ├── portrait-particles.webp  the photo cut out, for part 2 (generated)
+│   ├── portrait.jpg         the real photo (part 2 reveals it on hover)
+│   ├── portrait.svg         part 2's cowl that sits over it
+│   ├── portrait-particles.webp  the photo cut out, for the main page (generated)
 │   ├── janvaani.jpg         project screenshots, named by project
 │   ├── smart-attendance.jpg   so reordering never means renaming
 │   ├── resume.pdf           the real CV
 │   ├── resume-preview.png   page 1, rendered  (regenerate — see below)
-│   ├── og-image.jpg         1200x630 social preview
-│   └── og-image-v2.jpg      the same, for part 2
+│   ├── og-image-v2.jpg      1200x630 social preview, main page
+│   └── og-image.jpg         the same, part 2
 ├── tools/                   dev scripts, not deployed
 │   ├── make-resume-preview.py
 │   ├── make-particle-portrait.py
@@ -34,6 +47,8 @@ portfolio/
 ```
 
 ## The idea
+
+*From here to* The hero portrait *is about part 2, `v2/index.html`.*
 
 The page is seven **chapters**. Each `<section>` declares
 `data-chapter="light | dark | accent"`, and whichever chapter owns the middle
@@ -58,7 +73,7 @@ flip would be. That is the trade for an all-dark page.
 
 ## Make it yours
 
-Everything is in `index.html`, top to bottom.
+Everything is in `v2/index.html`, top to bottom.
 
 | What | Where |
 |---|---|
@@ -84,11 +99,15 @@ Content is complete. Two things are waiting on Quenaire itself:
 - **A real screenshot.** The panel shows a schematic for now — see
   *Project previews* below for swapping one in.
 
-Regenerate `assets/og-image.jpg` after any visual change to the hero, or
-the link preview will show the old design:
+Regenerate the page's link preview after any visual change to its hero,
+or the preview will show the old design — `assets/og-image.jpg` for part 2,
+`assets/og-image-v2.jpg` for the main page:
 
 ```bash
-chrome --headless=new --window-size=1200,630 --force-device-scale-factor=2        --screenshot=og-raw.png http://127.0.0.1:5173/
+# part 2
+chrome --headless=new --window-size=1200,630 --force-device-scale-factor=2        --screenshot=og-raw.png http://127.0.0.1:5173/v2/
+# main page: the budget lets the intro play out and the portrait form
+chrome --headless=new --window-size=1200,630 --force-device-scale-factor=2        --virtual-time-budget=12000 --screenshot=og-raw.png http://127.0.0.1:5173/
 # then downscale to exactly 1200x630 and save as JPEG (~41 KB;
 # PNG is 394 KB here — the opposite of the résumé, which is text)
 ```
@@ -112,8 +131,8 @@ python tools/make-resume-preview.py
 ```
 
 That regenerates the preview and prints its dimensions — if they changed,
-update `width`/`height` on the `<img>` in `index.html` so the page does not
-shift while it loads. `tools/` is a dev script; it is not part of the
+update `width`/`height` on the `<img>` in both pages so they do not
+shift while they load. `tools/` is a dev script; it is not part of the
 deployed site.
 
 Check the PDF's links before dropping it in. In LaTeX,
@@ -210,7 +229,9 @@ rather than being typed in.
 
 ### Analytics
 
-Nothing is loaded until you set a code. Near the bottom of `index.html`:
+Nothing is loaded until you set a code. The snippet is only in part 2 so
+far — copy it into `index.html` too when you set it up. Near the bottom of
+`v2/index.html`:
 
 ```js
 var CODE = '';                       // <- your goatcounter code
@@ -446,16 +467,11 @@ update `width`/`height` on the `<img>`. `object-position: 50% 20%` keeps
 the face in frame when the `max-height` guard crops the box on short
 screens.
 
-## Part 2 — `v2/`
+## The main page — particle portrait
 
-A second page over the same content, after a particle-portrait intro.
-It lives at `/v2/` and has its own `css/v2.css` and `js/v2.js`; nothing
-is shared with part 1 except the images and the PDF, so either page can
-change without touching the other. They link to each other: "Part 1" in
-part 2's nav and footer.
-
-It reaches the shared folders through `../`, so serve the repo root —
-`python -m http.server 5173`, then <http://127.0.0.1:5173/v2/>.
+`index.html` at the root, with `css/v2.css` and `js/v2.js` (see the table
+at the top for why they are called that). Serve the repo root —
+`python -m http.server 5173`, then <http://127.0.0.1:5173/>.
 
 ### The intro
 
@@ -470,7 +486,7 @@ retiming is editing numbers. It runs about five and a half seconds.
 
 - **Skipping** — any key, click, wheel or touch jumps to the end.
 - **Skipped entirely** under reduced motion, and for deep links
-  (`/v2/#work` lands on the work).
+  (`/#work` lands on the work).
 - **It cannot strand the page.** The curtain is a class, `is-intro`, set
   by an inline script in `<head>` so it is down before the first paint.
   That same script lifts it after four seconds unless `v2.js` has claimed
@@ -485,7 +501,7 @@ back up as the I of the name. SUYASH has no I, so here it sinks out
 instead and the two halves close up.
 
 **Changing the title.** The hero title is `.hero__word` in
-`v2/index.html`; `TITLE` near the top of `intro()` must match it exactly,
+`index.html`; `TITLE` near the top of `intro()` must match it exactly,
 in capitals. The intro turns SUYASH into `TITLE` one letter at a time and
 skips letters that already match, so any word works (it was PORTFOLIO
 once). If the new title is much shorter or longer, retune `--title` in
@@ -511,7 +527,7 @@ times a frame instead of twelve thousand. The loop stops while the hero
 is off screen. On phones the cursor effect is off and the grid is
 coarser.
 
-**Replacing the photo.** Swap `assets/portrait.jpg` (part 1 uses it too),
+**Replacing the photo.** Swap `assets/portrait.jpg` (part 2 uses it too),
 then regenerate the cut-out:
 
 ```bash
@@ -528,7 +544,7 @@ particles across a face, that is the difference between eyes and noise.
 image, so there are no particles; the cut-out shows as a still instead.
 Serve the folder.
 
-### The rest of part 2
+### The rest of the main page
 
 | Effect | Where |
 |---|---|
@@ -551,14 +567,17 @@ carries a little `padding-right` for that. Keep it if you add one.
 
 ## Run it locally
 
-Double-click `index.html`, or serve it (clipboard copy needs a real origin
-in some browsers):
+Serve the repo root — part 2 reaches `assets/` through `../`, and the
+main page's portrait needs a real origin (from `file://` the browser will
+not let it read the photo's pixels, so it shows as a still):
 
 ```bash
 python -m http.server 5173
 # or
 npx serve .
 ```
+
+Then <http://127.0.0.1:5173/> for the main page, `/v2/` for part 2.
 
 ## Deploy — free
 
@@ -578,7 +597,7 @@ git push -u origin main
 ```
 Then Settings → Pages → Source: `main` / root.
 
-## How the motion works
+## How the motion works (part 2)
 
 All scroll-linked animation runs in **one** `requestAnimationFrame` loop
 (`js/main.js`, section 13). Each effect registers a task; the loop calls
@@ -588,7 +607,7 @@ debounced resize, so nothing thrashes the layout mid-scroll.
 Everything is transform and opacity only — no animating width, height,
 top or left — so it stays on the compositor.
 
-## Fallbacks
+## Fallbacks (part 2)
 
 - **No JavaScript** — `<html>` never gets the `.js` class. Split text stays
   visible, the pinned reel becomes an ordinary horizontal scroller with
@@ -599,7 +618,7 @@ top or left — so it stays on the compositor.
   initialise.
 - **`file://`** — clipboard falls back to `execCommand`.
 
-## Accessibility notes
+## Accessibility notes (part 2)
 
 - Semantic sections, real heading order, skip link, visible focus rings
 - Decorative visuals are `aria-hidden`; the ticker text is decorative

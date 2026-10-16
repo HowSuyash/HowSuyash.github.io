@@ -6,404 +6,447 @@
 
 <!-- ========= EDIT: page metadata ========= -->
 <title>Suyash Shukla — Portfolio, part 2</title>
-<meta name="description" content="Web and AI developer and B.Tech CSE (Data Science) student who turns ideas into working products. Projects, experience and résumé." />
+<meta name="description" content="B.Tech CSE (Data Science) student who turns ideas into working products. Builder of Quenaire, an AI SaaS for security questionnaires. Projects, experience and résumé." />
 <meta name="author" content="Suyash Shukla" />
 
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Suyash Shukla — Portfolio, part 2" />
-<meta property="og:description" content="Web and AI developer building with Spring Boot, React, cloud, and RAG. Projects, experience and résumé." />
+<meta property="og:description" content="CS undergraduate building with Spring Boot, React, cloud, and AI on RAG. Projects, experience and résumé." />
+<!-- absolute, not relative: most social scrapers will not resolve a
+     relative og:image and the preview comes out blank -->
 <meta property="og:url" content="https://howsuyash.github.io/v2/" />
-<meta property="og:image" content="https://howsuyash.github.io/assets/og-image-v2.jpg?v=18" />
+<meta property="og:image" content="https://howsuyash.github.io/assets/og-image.jpg?v=18" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="SUYASH SHUKLA in chrome letters over his portrait made of blue particles" />
+<meta property="og:image:alt" content="Suyash Shukla's portfolio — his name in white over a dark page, beside a Batman cowl portrait" />
 <meta property="og:locale" content="en_IN" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://howsuyash.github.io/assets/og-image-v2.jpg?v=18" />
+<meta name="twitter:image" content="https://howsuyash.github.io/assets/og-image.jpg?v=18" />
 
 <link rel="canonical" href="https://howsuyash.github.io/v2/" />
-<meta name="theme-color" content="#050506" />
+<!-- tints the browser chrome on mobile; kept in step with the toggle by main.js -->
+<meta name="theme-color" content="#15151b" />
+<link rel="manifest" href="../site.webmanifest" />
+
+
 <link rel="icon" href="../assets/favicon.svg?v=18" type="image/svg+xml" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap" rel="stylesheet" />
+<!-- Roboto Flex carries the wght + wdth axes the hero proximity effect animates -->
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-<!-- Same rule as part 1: every local asset carries ?v=, because
-     /assets, /css and /js are served immutable for a year.
-     After changing any of them: python tools/bump-version.py -->
-<link rel="stylesheet" href="../css/v2.css?v=18" />
-<link rel="preload" href="../assets/portrait-particles.webp?v=18" as="image" type="image/webp" />
+<!-- Every local asset carries ?v=. They are served immutable for a
+     year, so the query string is the only thing that can tell a
+     browser to fetch again. After changing anything under assets/,
+     css/ or js/, run: python tools/bump-version.py -->
+<link rel="stylesheet" href="../css/styles.css?v=18" />
 
 <script>
-  /* Runs before the first paint, so the intro curtain is already
-     down when the page appears and the hero never flashes.
-
-     The intro is skipped for reduced motion and for deep links
-     (/v2/#work should land on the work, not on a five-second film).
-
-     It can only ever fail visible: js/v2.js marks the intro as its
-     own by setting data-intro. If it has not done that within four
-     seconds — the file failed to load, or threw — this lifts the
-     curtain itself and the page reads as plain content. */
+  document.documentElement.classList.add('js');
+  /* Runs before the first paint, so the page is never briefly the
+     wrong colour. Night is the default for everyone — the site is
+     built around it — and the OS preference is deliberately not
+     consulted; the toggle in the nav is the way out. A stored choice
+     still wins. Storage throws in some private windows, hence the
+     try. */
   (function () {
-    var html = document.documentElement;
-    html.classList.add('js');
-    if (location.hash || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    html.classList.add('is-intro');
-    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-    setTimeout(function () {
-      if (!html.hasAttribute('data-intro')) html.classList.remove('is-intro');
-    }, 4000);
+    var m = null;
+    try { m = localStorage.getItem('mode'); } catch (e) {}
+    document.documentElement.setAttribute('data-mode', m === 'day' ? 'day' : 'night');
   })();
 </script>
 </head>
 
-<body>
+<body data-theme="light">
 
-<a class="skip" href="#about">Skip to content</a>
+<!-- drifting night haze behind everything. Purely decorative and
+     purely CSS — no script, and only transforms animate. -->
+<div class="aura" aria-hidden="true">
+  <i class="aura__haze aura__haze--1"></i>
+  <i class="aura__haze aura__haze--2"></i>
+  <i class="aura__haze aura__haze--3"></i>
+  <span class="aura__grid"></span>
+  <span class="aura__dust aura__dust--far"></span>
+  <span class="aura__dust aura__dust--near"></span>
+  <span class="aura__beam"></span>
+</div>
 
-<!-- The intro stage. Empty on purpose: js/v2.js builds the dot, the
-     bar and the letters, plays them, and removes the whole thing. -->
-<div class="intro" data-intro aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<a class="skip-link" href="#work">Skip to work</a>
 
 <!-- ============================== NAV ============================== -->
-<header class="nav" data-nav>
-  <a class="nav__brand" href="#home">Suyash Shukla</a>
-
-  <button class="nav__toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="nav-links">
-    <span class="nav__toggle-label">Menu</span>
-    <span class="nav__toggle-icon" aria-hidden="true"><i></i><i></i></span>
-  </button>
-
-  <nav class="nav__links" id="nav-links" aria-label="Primary">
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#skills">Skills</a>
-    <a href="#work">Projects</a>
-    <a href="#journey">Experience</a>
+<header class="nav">
+  <a class="nav__brand" href="#top">
+    <span class="nav__mark" aria-hidden="true"></span>
+    <span>Suyash Shukla</span>
+  </a>
+  <nav class="nav__links" aria-label="Primary">
+    <a href="#work">Work</a>
+    <a href="#capabilities">Skills</a>
+    <a href="#experience">Experience</a>
     <a href="#resume">Résumé</a>
-    <a href="#contact">Contact</a>
-    <span class="nav__bar" data-nav-bar aria-hidden="true"></span>
-    <a class="nav__part" href="../">Part 1 <i aria-hidden="true">↗</i></a>
+    <a href="../">Part 1 ↗</a>
   </nav>
-
-  <span class="nav__progress" aria-hidden="true"><i data-progress></i></span>
+  <div class="nav__end">
+    <button class="nav__mode" type="button" data-mode-toggle aria-label="Switch theme">
+      <span class="nav__mode-icon" aria-hidden="true"></span>
+    </button>
+    <a class="nav__cta" href="#contact">
+      <span>Contact</span>
+      <span class="nav__dot" aria-hidden="true"></span>
+    </a>
+  </div>
 </header>
 
-<main>
+<main id="top">
 
-  <!-- ============================ HERO ============================ -->
-  <!-- The portrait is drawn on the canvas from the cut-out in
-       data-src (see tools/make-particle-portrait.py). The <img> is
-       the fallback: it shows until the particles are built, and stays
-       if they cannot be — opened from file://, for one. -->
-  <section class="hero" id="home" data-hero>
-    <img class="hero__still" src="../assets/portrait-particles.webp?v=18" width="334" height="520" alt="" />
-    <canvas class="hero__canvas" data-particles data-src="../assets/portrait-particles.webp?v=18" aria-hidden="true"></canvas>
+  <!-- ======================= CH 1 — HERO ========================= -->
+  <section class="chapter hero" data-chapter="light">
+    <div class="hero__inner">
 
-    <div class="hero__content">
-      <h1 class="hero__title">
-        <span class="hero__word" data-hero-word>Suyash Shukla</span>
-      </h1>
-      <div class="hero__meta">
-        <p class="hero__role"><b>Web &amp; AI</b> <i>Developer</i></p>
-        <div class="hero__actions">
-          <a class="hero__round" href="#about" aria-label="Scroll to about">
-            <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M12 4 4 12M4 5.5V12h6.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a class="hero__pill" href="#contact">Contact</a>
-        </div>
+      <div class="hero__lead">
+        <!-- data-vft = variable-font proximity: every letter warps toward the cursor -->
+        <h1 class="hero__name" data-vft>Suyash Shukla</h1>
+
+        <p class="hero__since">
+          I turn ideas into working products<br />
+          <em>CS undergraduate, class of 2028</em>
+        </p>
+
+        <p class="hero__lang">
+          <span><i class="pulse" aria-hidden="true"></i> Open to internships</span>
+          <span class="hero__sep" aria-hidden="true">/</span>
+          <span>India — remote</span>
+        </p>
+      </div>
+
+      <!-- The cowl sits on top; the real photo underneath is revealed
+           through a circular mask that follows the cursor. On touch
+           there is no cursor, so the photo shows plainly instead. -->
+      <figure class="hero__portrait" data-portrait>
+        <img class="hero__portrait-shot" src="../assets/portrait.jpg?v=18" width="1000" height="1250"
+             alt="Suyash Shukla" />
+        <img class="hero__portrait-cowl" src="../assets/portrait.svg?v=18" width="400" height="500"
+             alt="" aria-hidden="true" />
+        <figcaption aria-hidden="true">◆ hover to unmask</figcaption>
+      </figure>
+
+    </div>
+
+    <div class="hero__cue" aria-hidden="true">
+      <span class="hero__cue-line"><i></i></span>
+      <span>Scroll</span>
+    </div>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker__track" data-ticker>
+        <span>Java</span><b>◆</b><span>Spring Boot</span><b>◆</b><span>React</span><b>◆</b><span>JavaScript</span><b>◆</b><span>PostgreSQL</span><b>◆</b><span>RAG</span><b>◆</b><span>Docker</span><b>◆</b><span>AWS</span><b>◆</b><span>IBM Cloud</span><b>◆</b><span>Flask</span><b>◆</b><span>Firebase</span><b>◆</b><span>REST APIs</span><b>◆</b>
+        <span>Java</span><b>◆</b><span>Spring Boot</span><b>◆</b><span>React</span><b>◆</b><span>JavaScript</span><b>◆</b><span>PostgreSQL</span><b>◆</b><span>RAG</span><b>◆</b><span>Docker</span><b>◆</b><span>AWS</span><b>◆</b><span>IBM Cloud</span><b>◆</b><span>Flask</span><b>◆</b><span>Firebase</span><b>◆</b><span>REST APIs</span><b>◆</b>
       </div>
     </div>
   </section>
 
-  <!-- =========================== ABOUT ============================ -->
-  <section class="section about" id="about">
-    <div class="about__head">
-      <span class="eyebrow">About me</span>
-      <h2 class="bigword" data-bigword>Intro</h2>
-    </div>
+  <!-- ==================== CH 2 — MANIFESTO ====================== -->
+  <section class="chapter manifesto" data-chapter="dark" id="about">
+    <span class="eyebrow">01 — Approach</span>
+    <p class="manifesto__text" data-words>
+      I learn by shipping. An AI SaaS that drafts security questionnaires from
+      a company's own policies. A grievance platform that cut resolution time
+      from 72 hours to 36. A classroom analytics stack on a zero-cost cloud.
+    </p>
+  </section>
 
-    <div class="about__card" data-reveal>
-      <!-- data-words: each word lights up as the card crosses the
-           viewport. Bold survives the split. -->
-      <p class="about__text" data-words>
-        Hey, I'm <b>Suyash.</b> A full-stack developer and third-year B.Tech CSE
-        (Data Science) student who turns ideas into working products. I'm building
-        <b>Quenaire</b>, an AI SaaS that drafts security questionnaire answers with
-        RAG. I shipped <b>JanVaani</b>, a civic grievance platform that cut resolution
-        time from <b>72 hours to 36</b>, and owned the cloud stack for
-        <b>Smart Attendance</b> at zero cost. Two internships so far, at <b>IBM</b>
-        and <b>Tryhosting</b>, and open to the next one.
-      </p>
-      <ul class="about__chips">
-        <li><i class="pulse" aria-hidden="true"></i>Open to internships</li>
-        <li>India — remote</li>
-        <li>Class of 2028</li>
-      </ul>
+  <!-- ================== CH 3 — WORK (PINNED) ==================== -->
+  <section class="reel" id="work" data-chapter="dark" data-reel>
+    <div class="reel__pin">
+
+      <div class="reel__head">
+        <span class="eyebrow">02 — Selected work</span>
+        <span class="reel__counter"><b data-reel-current>01</b> / <span data-reel-total>04</span></span>
+      </div>
+
+      <div class="reel__track" data-reel-track>
+
+        <article class="panel">
+          <!-- a schematic, not a screenshot: there is no public deployment
+               to capture yet. Built in markup so it stays sharp at any
+               size. To use a real screenshot instead, swap this div for
+               the panel__visual--shot pattern the other two panels use. -->
+          <div class="panel__visual panel__visual--01 panel__visual--rag" role="img"
+               aria-label="Illustration of Quenaire at work: a questionnaire question, the three policy passages retrieved for it, and the drafted answer citing them">
+            <div class="rag">
+              <p class="rag__head"><b>Q 4.2</b><i>Data protection</i></p>
+              <p class="rag__q">Is customer data encrypted at rest?</p>
+              <ol class="rag__hits">
+                <li><em>Information Security Policy §3.1</em><small>0.92</small></li>
+                <li><em>Data Handling Standard §2.4</em><small>0.87</small></li>
+                <li><em>Cloud Hosting Controls §1.2</em><small>0.81</small></li>
+              </ol>
+              <p class="rag__a"><b>Draft</b> Yes. Customer data is encrypted at rest and in transit, per InfoSec Policy §3.1.</p>
+              <p class="rag__foot"><i>pgvector · top 3</i><b>Ready for review</b></p>
+            </div>
+          </div>
+          <div class="panel__info">
+            <span class="panel__num">01</span>
+            <h2 class="panel__title">Quenaire</h2>
+            <p class="panel__desc">
+              An AI SaaS that drafts answers to security and compliance questionnaires.
+              Company policies are stored as vector embeddings in PostgreSQL with
+              pgvector, so every answer is grounded in the most relevant evidence.
+              I built the Spring Boot backend and the React front end for uploading
+              documents and reviewing drafts.
+            </p>
+            <ul class="panel__tags"><li>Spring Boot</li><li>React</li><li>PostgreSQL</li><li>pgvector</li><li>RAG</li></ul>
+            <div class="panel__links">
+              <a href="https://github.com/HowSuyash/Quenaire" target="_blank" rel="noopener noreferrer" data-magnetic>Source <i aria-hidden="true">↗</i></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel__visual panel__visual--shot panel__visual--02">
+            <img src="../assets/janvaani.jpg?v=18" width="1200" height="900" loading="lazy"
+                 alt="JanVaani live site — One Platform. Every Grievance. Resolved. — with complaint statistics" />
+          </div>
+          <div class="panel__info">
+            <span class="panel__num">02</span>
+            <h2 class="panel__title">JanVaani</h2>
+            <p class="panel__desc">
+              Zero-backend civic grievance platform built for India Innovates 2026.
+              AI-driven complaint prioritisation, automatic routing across six
+              government departments, and real-time ticket tracking with no login.
+              Cut simulated resolution time from 72+ hours to 36, at a 94% resolution rate.
+            </p>
+            <ul class="panel__tags"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Multilingual</li></ul>
+            <div class="panel__links">
+              <a href="https://smartps-crm.netlify.app/" target="_blank" rel="noopener noreferrer" data-magnetic>Live site <i aria-hidden="true">↗</i></a>
+              <a href="https://drive.google.com/file/d/1BvhKTSOiJBS4cqGuRTViAYkHfZNquVjM/view?usp=sharing" target="_blank" rel="noopener noreferrer" data-magnetic>Demo video <i aria-hidden="true">↗</i></a>
+              <a href="https://github.com/HowSuyash/Smart-psCRM" target="_blank" rel="noopener noreferrer" data-magnetic>Source <i aria-hidden="true">↗</i></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel__visual panel__visual--shot panel__visual--03">
+            <img src="../assets/smart-attendance.jpg?v=18" width="1200" height="900" loading="lazy"
+                 alt="Smart Attendance sign-in screen for the face emotion recognition system" />
+          </div>
+          <div class="panel__info">
+            <span class="panel__num">03</span>
+            <h2 class="panel__title">Smart Attendance</h2>
+            <p class="panel__desc">
+              Full-stack engagement analytics for classrooms, built for Cloud Hackathon 2026.
+              A Hugging Face Vision Transformer classifies emotion from classroom photos in
+              real time and maps it to engagement — focused or distracted. I owned the
+              backend, Firebase integration and cloud architecture, on a zero-cost stack.
+            </p>
+            <ul class="panel__tags"><li>Flask</li><li>MediaPipe</li><li>Hugging Face</li><li>Firebase</li><li>Chart.js</li></ul>
+            <div class="panel__links">
+              <a href="https://dashing-concha-5401f5.netlify.app/login.html" target="_blank" rel="noopener noreferrer" data-magnetic>Live site <i aria-hidden="true">↗</i></a>
+              <a href="https://github.com/HowSuyash/SmartAttendance" target="_blank" rel="noopener noreferrer" data-magnetic>Source <i aria-hidden="true">↗</i></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel panel--end">
+          <div class="panel__info">
+            <span class="panel__num">04</span>
+            <h2 class="panel__title">More on<br />GitHub</h2>
+            <p class="panel__desc">
+              Coursework, experiments and the things that never got a landing page.
+            </p>
+            <div class="panel__links">
+              <a href="https://github.com/HowSuyash" target="_blank" rel="noopener noreferrer" data-magnetic>@HowSuyash <i aria-hidden="true">↗</i></a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="reel__hint" aria-hidden="true">
+        <span class="reel__bar"><i data-reel-bar></i></span>
+        <span>Keep scrolling</span>
+      </div>
+
     </div>
   </section>
 
-  <!-- =========================== SKILLS =========================== -->
-  <section class="section skills" id="skills">
-    <div class="section__head">
-      <span class="eyebrow">What I work with</span>
-      <h2 class="bigword" data-bigword>Skills</h2>
-    </div>
+  <!-- =================== CH 4 — CAPABILITIES ==================== -->
+  <section class="chapter caps" id="capabilities" data-chapter="light">
+    <span class="eyebrow">03 — What I work with</span>
 
-    <ul class="skills__grid">
-      <li class="skill" data-reveal data-glow>
-        <span class="skill__num">01</span>
-        <h3 class="skill__title">Java &amp; Spring Boot</h3>
-        <p class="skill__desc">Spring Boot, Spring Data JPA, Spring Security, REST APIs. Quenaire's backend is Spring Boot over PostgreSQL. Certified through EazyBytes' Spring Boot course.</p>
-        <ul class="tags"><li>Java</li><li>Spring Boot</li><li>JPA</li><li>REST</li></ul>
+    <ul class="caps__list">
+      <li class="cap">
+        <span class="cap__num">01</span>
+        <h2 class="cap__title">Java &amp; Spring Boot</h2>
+        <p class="cap__desc">Spring Boot, Spring Data JPA, Spring Security, REST APIs. Quenaire's backend is Spring Boot over PostgreSQL. Certified through EazyBytes' Spring Boot course.</p>
+        <i class="cap__arrow" aria-hidden="true">↗</i>
       </li>
-      <li class="skill" data-reveal data-glow>
-        <span class="skill__num">02</span>
-        <h3 class="skill__title">Front-end development</h3>
-        <p class="skill__desc">HTML, CSS, JavaScript, React. Client websites at Tryhosting, Quenaire's review dashboard, and JanVaani's entire interface — three languages, no framework, no backend.</p>
-        <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>React</li></ul>
+      <li class="cap">
+        <span class="cap__num">02</span>
+        <h2 class="cap__title">Front-end development</h2>
+        <p class="cap__desc">HTML, CSS, JavaScript, React. Client websites at Tryhosting, Quenaire's review dashboard, and JanVaani's entire interface — three languages, no framework, no backend.</p>
+        <i class="cap__arrow" aria-hidden="true">↗</i>
       </li>
-      <li class="skill" data-reveal data-glow>
-        <span class="skill__num">03</span>
-        <h3 class="skill__title">AI applications</h3>
-        <p class="skill__desc">Retrieval-Augmented Generation over pgvector embeddings in Quenaire. A Hugging Face Vision Transformer reading classroom engagement in Smart Attendance.</p>
-        <ul class="tags"><li>RAG</li><li>pgvector</li><li>Hugging Face</li><li>MediaPipe</li></ul>
+      <li class="cap">
+        <span class="cap__num">03</span>
+        <h2 class="cap__title">AI applications</h2>
+        <p class="cap__desc">Retrieval-Augmented Generation over pgvector embeddings in Quenaire. A Hugging Face Vision Transformer reading classroom engagement in Smart Attendance.</p>
+        <i class="cap__arrow" aria-hidden="true">↗</i>
       </li>
-      <li class="skill" data-reveal data-glow>
-        <span class="skill__num">04</span>
-        <h3 class="skill__title">Cloud computing</h3>
-        <p class="skill__desc">AWS Academy Graduate, Cloud Foundations and Architect. IBM Cloud and Docker from the IBM internship. Smart Attendance runs on Firebase and Render at zero cost.</p>
-        <ul class="tags"><li>AWS</li><li>IBM Cloud</li><li>Docker</li><li>Firebase</li></ul>
+      <li class="cap">
+        <span class="cap__num">04</span>
+        <h2 class="cap__title">Cloud computing</h2>
+        <p class="cap__desc">AWS Academy Graduate, Cloud Foundations and Architect. IBM Cloud and Docker from the IBM internship. Smart Attendance runs on Firebase and Render at zero cost.</p>
+        <i class="cap__arrow" aria-hidden="true">↗</i>
       </li>
     </ul>
   </section>
 
-  <!-- ========================== PROJECTS ========================== -->
-  <section class="section work" id="work">
-    <div class="section__head">
-      <span class="eyebrow">Selected work</span>
-      <h2 class="bigword" data-bigword>Projects</h2>
-    </div>
+  <!-- ==================== CH 5 — EXPERIENCE ===================== -->
+  <section class="chapter exp" id="experience" data-chapter="dark" data-exp>
+    <span class="eyebrow">04 — Experience &amp; education</span>
 
-    <!-- data-stack: on wide screens each card sticks and the next one
-         slides over it; the covered card shrinks back a little. -->
-    <div class="work__stack" data-stack>
+    <ol class="exp__list">
+      <span class="exp__rail" aria-hidden="true"><i data-exp-rail></i></span>
 
-      <article class="project" style="--i: 0">
-        <!-- a schematic, not a screenshot: Quenaire has no public
-             deployment to capture yet -->
-        <div class="project__visual project__visual--rag" role="img"
-             aria-label="Illustration of Quenaire at work: a questionnaire question, the three policy passages retrieved for it, and the drafted answer citing them">
-          <div class="rag">
-            <p class="rag__head"><b>Q 4.2</b><i>Data protection</i></p>
-            <p class="rag__q">Is customer data encrypted at rest?</p>
-            <ol class="rag__hits">
-              <li><em>Information Security Policy §3.1</em><small>0.92</small></li>
-              <li><em>Data Handling Standard §2.4</em><small>0.87</small></li>
-              <li><em>Cloud Hosting Controls §1.2</em><small>0.81</small></li>
-            </ol>
-            <p class="rag__a"><b>Draft</b> Yes. Customer data is encrypted at rest and in transit, per InfoSec Policy §3.1.</p>
-            <p class="rag__foot"><i>pgvector · top 3</i><b>Ready for review</b></p>
-          </div>
-        </div>
-        <div class="project__info">
-          <span class="project__num">01 / 03</span>
-          <h3 class="project__title">Quenaire</h3>
-          <p class="project__desc">
-            An AI SaaS that drafts answers to security and compliance questionnaires.
-            Company policies are stored as vector embeddings in PostgreSQL with
-            pgvector, so every answer is grounded in the most relevant evidence.
-            I built the Spring Boot backend and the React front end for uploading
-            documents and reviewing drafts.
-          </p>
-          <ul class="tags"><li>Spring Boot</li><li>React</li><li>PostgreSQL</li><li>pgvector</li><li>RAG</li></ul>
-          <div class="project__links">
-            <a class="btn" href="https://github.com/HowSuyash/Quenaire" target="_blank" rel="noopener noreferrer">Source <i aria-hidden="true">↗</i></a>
-          </div>
-        </div>
-      </article>
-
-      <article class="project" style="--i: 1">
-        <div class="project__visual">
-          <img src="../assets/janvaani.jpg?v=18" width="1200" height="900" loading="lazy"
-               alt="JanVaani live site — One Platform. Every Grievance. Resolved. — with complaint statistics" />
-        </div>
-        <div class="project__info">
-          <span class="project__num">02 / 03</span>
-          <h3 class="project__title">JanVaani</h3>
-          <p class="project__desc">
-            Zero-backend civic grievance platform built for India Innovates 2026.
-            AI-driven complaint prioritisation, automatic routing across six
-            government departments, and real-time ticket tracking with no login.
-            Cut simulated resolution time from 72+ hours to 36, at a 94% resolution rate.
-          </p>
-          <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Multilingual</li></ul>
-          <div class="project__links">
-            <a class="btn btn--solid" href="https://smartps-crm.netlify.app/" target="_blank" rel="noopener noreferrer">Live site <i aria-hidden="true">↗</i></a>
-            <a class="btn" href="https://drive.google.com/file/d/1BvhKTSOiJBS4cqGuRTViAYkHfZNquVjM/view?usp=sharing" target="_blank" rel="noopener noreferrer">Demo video <i aria-hidden="true">↗</i></a>
-            <a class="btn" href="https://github.com/HowSuyash/Smart-psCRM" target="_blank" rel="noopener noreferrer">Source <i aria-hidden="true">↗</i></a>
-          </div>
-        </div>
-      </article>
-
-      <article class="project" style="--i: 2">
-        <div class="project__visual">
-          <img src="../assets/smart-attendance.jpg?v=18" width="1200" height="900" loading="lazy"
-               alt="Smart Attendance sign-in screen for the face emotion recognition system" />
-        </div>
-        <div class="project__info">
-          <span class="project__num">03 / 03</span>
-          <h3 class="project__title">Smart Attendance</h3>
-          <p class="project__desc">
-            Full-stack engagement analytics for classrooms, built for Cloud Hackathon 2026.
-            A Hugging Face Vision Transformer classifies emotion from classroom photos in
-            real time and maps it to engagement — focused or distracted. I owned the
-            backend, Firebase integration and cloud architecture, on a zero-cost stack.
-          </p>
-          <ul class="tags"><li>Flask</li><li>MediaPipe</li><li>Hugging Face</li><li>Firebase</li><li>Chart.js</li></ul>
-          <div class="project__links">
-            <a class="btn btn--solid" href="https://dashing-concha-5401f5.netlify.app/login.html" target="_blank" rel="noopener noreferrer">Live site <i aria-hidden="true">↗</i></a>
-            <a class="btn" href="https://github.com/HowSuyash/SmartAttendance" target="_blank" rel="noopener noreferrer">Source <i aria-hidden="true">↗</i></a>
-          </div>
-        </div>
-      </article>
-
-    </div>
-
-    <a class="work__more" href="https://github.com/HowSuyash" target="_blank" rel="noopener noreferrer" data-reveal>
-      <span>Coursework, experiments and the things that never got a landing page</span>
-      <b>More on GitHub <i aria-hidden="true">↗</i></b>
-    </a>
-  </section>
-
-  <!-- ========================= EXPERIENCE ========================= -->
-  <section class="section journey" id="journey">
-    <div class="section__head">
-      <span class="eyebrow">Experience &amp; education</span>
-      <h2 class="bigword" data-bigword>Journey</h2>
-    </div>
-
-    <!-- data-timeline: the rail fills as you read, and each row lights
-         when the fill reaches it -->
-    <ol class="tl" data-timeline>
-      <li class="tl__rail" aria-hidden="true"><i data-rail></i></li>
-
-      <li class="tl__row">
-        <span class="tl__when">Aug — Sep 2026</span>
-        <div class="tl__body">
-          <h3 class="tl__role">Cloud Computing Intern</h3>
-          <span class="tl__org">IBM</span>
-          <p class="tl__desc">
+      <li class="exp__row">
+        <span class="exp__year">Aug — Sep 2026</span>
+        <div class="exp__body">
+          <h2 class="exp__role">Cloud Computing Intern</h2>
+          <span class="exp__org">IBM</span>
+          <p class="exp__desc">
             A month of hands-on IBM Cloud: IaaS, PaaS and SaaS service models,
             virtual servers, cloud storage and deploying web applications, plus
             containerisation with Docker. Guided labs, ending in a final project.
           </p>
         </div>
       </li>
-      <li class="tl__row">
-        <span class="tl__when">May — Jul 2026</span>
-        <div class="tl__body">
-          <h3 class="tl__role">Web Developer Intern, paid</h3>
-          <span class="tl__org">Tryhosting Technologies</span>
-          <p class="tl__desc">
+      <li class="exp__row">
+        <span class="exp__year">May — Jul 2026</span>
+        <div class="exp__body">
+          <h2 class="exp__role">Web Developer Intern, paid</h2>
+          <span class="exp__org">Tryhosting Technologies</span>
+          <p class="exp__desc">
             Built responsive pages and reusable components for client websites.
             Handled hosting, domain configuration and deployment, fixed bugs that
             clients reported, and improved page speed and on-page SEO.
           </p>
         </div>
       </li>
-      <li class="tl__row">
-        <span class="tl__when">2024 — 2028</span>
-        <div class="tl__body">
-          <h3 class="tl__role">B.Tech, CSE (Data Science)</h3>
-          <span class="tl__org">ABES Engineering College</span>
-          <p class="tl__desc">
+      <li class="exp__row">
+        <span class="exp__year">2024 — 2028</span>
+        <div class="exp__body">
+          <h2 class="exp__role">B.Tech, CSE (Data Science)</h2>
+          <span class="exp__org">ABES Engineering College</span>
+          <p class="exp__desc">
             GPA 7.9 / 10.0. Class 12 CBSE 83.1%, Class 10 CBSE 98.1%.
-          </p>
-        </div>
-      </li>
-      <li class="tl__row">
-        <span class="tl__when">Certified</span>
-        <div class="tl__body">
-          <h3 class="tl__role">AWS Academy &amp; Spring Boot</h3>
-          <span class="tl__org">AWS Academy · EazyBytes</span>
-          <p class="tl__desc">
-            AWS Academy Graduate, Cloud Foundations and Architect. Java Spring Boot
-            Development on Udemy: Core Java, Spring Boot, Spring Data JPA, REST APIs
-            and Spring Security.
           </p>
         </div>
       </li>
     </ol>
   </section>
 
-  <!-- =========================== RÉSUMÉ =========================== -->
-  <section class="section resume" id="resume">
-    <div class="section__head">
-      <span class="eyebrow">On paper</span>
-      <h2 class="bigword" data-bigword>Résumé</h2>
-    </div>
+  <!-- ====================== CH 6 — RÉSUMÉ ======================= -->
+  <section class="chapter resume" id="resume" data-chapter="light">
+    <span class="eyebrow">05 — Résumé</span>
 
     <div class="resume__grid">
-      <div class="resume__side" data-reveal>
+      <div class="resume__side">
+        <h2 class="resume__title">The short<br />version</h2>
         <p class="resume__text">
-          Experience, projects, education and certifications, on one page.
+          Experience, projects, education and certifications, on paper.
           Last updated October 2026.
         </p>
 
         <ul class="resume__facts">
-          <li><b data-count="2">2</b><span>internships</span></li>
-          <li><b data-count="3">3</b><span>projects built</span></li>
-          <li><b data-count="7.9">7.9</b><span>GPA / 10</span></li>
+          <li><b>2</b><span>internships</span></li>
+          <li><b>3</b><span>projects built</span></li>
+          <li><b>7.9</b><span>GPA / 10</span></li>
         </ul>
 
         <div class="resume__actions">
-          <a class="btn btn--solid btn--lg" href="../assets/resume.pdf?v=18" target="_blank" rel="noopener noreferrer">Open PDF <i aria-hidden="true">↗</i></a>
-          <a class="btn btn--lg" href="../assets/resume.pdf?v=18" download="Suyash-Shukla-Resume.pdf">Download</a>
+          <a class="resume__btn resume__btn--solid" href="../assets/resume.pdf?v=18"
+             target="_blank" rel="noopener noreferrer" data-magnetic>
+            Open PDF <i aria-hidden="true">↗</i>
+          </a>
+          <a class="resume__btn" href="../assets/resume.pdf?v=18"
+             download="Suyash-Shukla-Resume.pdf" data-magnetic>Download</a>
         </div>
       </div>
 
-      <!-- the page image, not an <iframe>: PDF embeds render blank on
-           most mobile browsers. Clicking opens the real PDF. -->
-      <a class="paper" href="../assets/resume.pdf?v=18" target="_blank" rel="noopener noreferrer"
-         aria-label="Open Suyash Shukla's résumé as a PDF" data-tilt data-reveal>
+      <!-- the page image, not an <iframe>: PDF embeds render blank on most
+           mobile browsers. Clicking opens the real PDF. -->
+      <a class="resume__paper" href="../assets/resume.pdf?v=18" target="_blank" rel="noopener noreferrer"
+         aria-label="Open Suyash Shukla's résumé as a PDF">
         <img src="../assets/resume-preview.png?v=18" width="1191" height="1684" loading="lazy"
              alt="First page of Suyash Shukla's résumé — summary, work experience, projects and education" />
       </a>
     </div>
   </section>
 
-  <!-- =========================== CONTACT ========================== -->
-  <section class="section contact" id="contact">
-    <span class="eyebrow">Contact</span>
-    <h2 class="bigword bigword--xl" data-bigword>Let's talk</h2>
-    <p class="contact__text" data-reveal>
-      Open to internships, full-stack work and interesting problems.
-      Email is the fastest way to reach me.
-    </p>
-    <a class="contact__mail" href="mailto:suyashshukla0702@gmail.com" data-reveal>suyashshukla0702@gmail.com</a>
-    <button class="btn contact__copy" type="button" data-copy="suyashshukla0702@gmail.com">Copy address</button>
+  <!-- ===================== CH 7 — CONTACT ======================= -->
+  <section class="chapter contact" id="contact" data-chapter="accent">
+    <div class="contact__inner">
+      <span class="eyebrow">06 — Contact</span>
+      <h2 class="contact__title" data-split>Let's talk</h2>
+      <p class="contact__text">
+        Open to internships, full-stack work and interesting problems.
+        Email is the fastest way to reach me.
+      </p>
+      <a class="contact__mail" href="mailto:suyashshukla0702@gmail.com" data-magnetic>suyashshukla0702@gmail.com</a>
+      <button class="contact__copy" data-copy="suyashshukla0702@gmail.com" type="button">Copy address</button>
 
-    <div class="contact__socials" data-reveal>
-      <a href="https://github.com/HowSuyash" target="_blank" rel="noopener noreferrer">GitHub <i aria-hidden="true">↗</i></a>
-      <a href="https://www.linkedin.com/in/howsuyash/" target="_blank" rel="noopener noreferrer">LinkedIn <i aria-hidden="true">↗</i></a>
-      <a href="tel:+916392852762">+91 63928 52762</a>
-      <a href="../assets/resume.pdf?v=18" target="_blank" rel="noopener noreferrer">Résumé <i aria-hidden="true">↗</i></a>
+      <div class="contact__socials">
+        <a href="https://github.com/HowSuyash" target="_blank" rel="noopener noreferrer">GitHub <i aria-hidden="true">↗</i></a>
+        <a href="https://www.linkedin.com/in/howsuyash/" target="_blank" rel="noopener noreferrer">LinkedIn <i aria-hidden="true">↗</i></a>
+        <a href="tel:+916392852762">+91 63928 52762</a>
+        <a href="../assets/resume.pdf?v=18" target="_blank" rel="noopener noreferrer">Résumé <i aria-hidden="true">↗</i></a>
+      </div>
+    </div>
+
+    <div class="ticker ticker--big" aria-hidden="true">
+      <div class="ticker__track" data-ticker data-dir="-1">
+        <span>LET'S BUILD</span><b>◆</b><span>LET'S BUILD</span><b>◆</b><span>LET'S BUILD</span><b>◆</b><span>LET'S BUILD</span><b>◆</b>
+        <span>LET'S BUILD</span><b>◆</b><span>LET'S BUILD</span><b>◆</b><span>LET'S BUILD</span><b>◆</b><span>LET'S BUILD</span><b>◆</b>
+      </div>
     </div>
   </section>
 
 </main>
 
 <footer class="footer">
-  <span>© <span data-year>2026</span> Suyash Shukla</span>
-  <a href="../">This is part 2 — see part 1 <i aria-hidden="true">↗</i></a>
-  <a href="#home">Back to top <i aria-hidden="true">↑</i></a>
+  <span>© <span id="year">2026</span> Suyash Shukla</span>
+  <span>Built from scratch — no frameworks</span>
+  <a href="../">Part 2 of 2 — back to part 1 ↗</a>
 </footer>
 
-<div class="toast" data-toast role="status" aria-live="polite"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="../js/v2.js?v=18"></script>
+<!-- ========= EDIT: analytics =========
+     GoatCounter: free, no cookies, no consent banner needed, and it
+     works on both hosts (Vercel's own analytics only counts the
+     vercel.app domain, which is not the canonical URL).
+
+     Sign up at goatcounter.com, then put your site code below —
+     if it is "" nothing loads at all, so this is inert until you
+     fill it in. No broken request in the meantime. -->
+<script>
+  (function () {
+    var CODE = '';                       // <- your goatcounter code
+    if (!CODE) return;
+    var s = document.createElement('script');
+    s.async = true;
+    s.dataset.goatcounter = 'https://' + CODE + '.goatcounter.com/count';
+    s.src = '//gc.zgo.at/count.js';
+    document.head.appendChild(s);
+  })();
+</script>
+
+<script src="../js/main.js?v=18"></script>
 </body>
 </html>
