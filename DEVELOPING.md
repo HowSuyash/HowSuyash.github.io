@@ -93,13 +93,10 @@ Everything is in `v2/index.html`, top to bottom.
 
 ### Still to fill in
 
-Content is complete. Two things are waiting on Quenaire itself:
-
-- **A live link.** `www.quenaire.com` is still a parked domain, so the
-  panel links to the source only. Add a `Live site` link next to it
-  once the app is deployed.
-- **A real screenshot.** The panel shows a schematic for now — see
-  *Project previews* below for swapping one in.
+Quenaire is live at `quenaire.com`. The main page links to it and shows a
+screenshot (`assets/quenaire.jpg`). Part 2 still shows the schematic and
+links to the source only. Swap in the screenshot there too if you want it
+(see *Project previews* below).
 
 Regenerate the page's link preview after any visual change to its hero,
 or the preview will show the old design — `assets/og-image.jpg` for part 2,
@@ -211,7 +208,17 @@ To swap one out, replace the file and keep the name. The gradient behind
 it stays as the loading colour. `.panel__visual--shot` switches off the
 decorative grid overlay so it does not sit on top of the screenshot.
 
-**Quenaire** has no public deployment yet, so its panel is a schematic
+`quenaire.jpg` was captured from `quenaire.com` with Playwright, after
+clicking "Not now" on the new-customer offer popup. Plain headless Chrome
+captures the popup over the page. `diplo.jpg` is a frame from the HackIIITD demo video (`diplo-demo.mp4`,
+82 s in, the Uber booking). The video is 16:9 and the card frame is
+squarer, so the empty band between the checklist and the phone was cut
+out with a wide crossfade, the 4x speed badge painted out, and the result
+padded to 4:3 with room on every side. The frame then crops it centred
+without losing either half. Diplo has no public deployment; the "Demo
+video" button opens the MP4 itself (h264, faststart, ~8.9 MB).
+
+**Quenaire** on part 2 still uses a schematic
 written in markup (`.rag` in `styles.css`): a question, the three policy
 passages retrieved for it, and the drafted answer. It is sized in `cqh`
 units against the frame's height, so it fits at 4:3 and at the 16:10

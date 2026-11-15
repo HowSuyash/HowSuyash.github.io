@@ -829,67 +829,6 @@ html.is-intro .intro,
 .project__desc { color: var(--muted); font-size: .98rem; }
 .project__links { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: auto; padding-top: .4rem; }
 
-/* Quenaire's schematic, sized against the frame (cq units) so it
-   fits the tall desktop frame and the short phone one alike */
-.project__visual--rag { display: grid; place-items: center; }
-.rag {
-  display: grid;
-  gap: 2.4cqh;
-  width: min(84cqw, 110cqh);
-  padding: 4.5cqh 4.5cqh 4cqh;
-  border: 1px solid rgba(169, 184, 224, .22);
-  border-radius: 2.6cqh;
-  background: rgba(8, 10, 16, .82);
-  box-shadow: 0 4cqh 10cqh rgba(0, 0, 0, .55);
-  font-size: 2.9cqh;
-  line-height: 1.35;
-  transform: rotate(-1.5deg);
-  transition: transform .8s var(--ease);
-}
-.project:hover .rag { transform: rotate(0deg) scale(1.02); }
-.rag i, .rag em { font-style: normal; }
-.rag__head,
-.rag__foot {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: var(--muted);
-  font-size: .9em;
-}
-.rag__head b { font-weight: 600; color: var(--ice); }
-.rag__q { font-size: 1.5em; font-weight: 700; line-height: 1.2; letter-spacing: -.02em; color: #fff; }
-.rag__hits { display: grid; gap: 1.1cqh; }
-.rag__hits li {
-  display: flex;
-  justify-content: space-between;
-  gap: 2cqh;
-  padding: 1.1cqh 1.8cqh;
-  border: 1px solid var(--line);
-  border-radius: 1.4cqh;
-  background: rgba(255, 255, 255, .025);
-  color: rgba(236, 238, 242, .78);
-}
-.rag__hits em { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.rag__hits small { font-size: inherit; color: var(--ice); font-variant-numeric: tabular-nums; }
-.rag__a { color: rgba(236, 238, 242, .88); }
-.rag__a b {
-  margin-right: .5em;
-  padding: .15em .5em;
-  border-radius: .4em;
-  background: rgba(169, 184, 224, .16);
-  color: var(--ice);
-  font-size: .82em;
-  font-weight: 600;
-}
-.rag__foot { padding-top: 2.2cqh; border-top: 1px solid var(--line); }
-.rag__foot b {
-  padding: .5cqh 2cqh;
-  border-radius: 100px;
-  background: var(--ink);
-  color: var(--bg);
-  font-weight: 600;
-}
-
 .work__more {
   display: flex;
   align-items: center;

@@ -15,13 +15,13 @@
 <!-- absolute, not relative: most social scrapers will not resolve a
      relative og:image and the preview comes out blank -->
 <meta property="og:url" content="https://howsuyash.github.io/" />
-<meta property="og:image" content="https://howsuyash.github.io/assets/og-image-v2.jpg?v=19" />
+<meta property="og:image" content="https://howsuyash.github.io/assets/og-image-v2.jpg?v=22" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="SUYASH SHUKLA in chrome letters over his portrait made of blue particles" />
 <meta property="og:locale" content="en_IN" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://howsuyash.github.io/assets/og-image-v2.jpg?v=19" />
+<meta name="twitter:image" content="https://howsuyash.github.io/assets/og-image-v2.jpg?v=22" />
 
 <link rel="canonical" href="https://howsuyash.github.io/" />
 <meta name="theme-color" content="#050506" />
@@ -50,7 +50,7 @@
   }
 }
 </script>
-<link rel="icon" href="assets/favicon.svg?v=19" type="image/svg+xml" />
+<link rel="icon" href="assets/favicon.svg?v=22" type="image/svg+xml" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -59,8 +59,8 @@
 <!-- Same rule on every page: every local asset carries ?v=, because
      /assets, /css and /js are served immutable for a year.
      After changing any of them: python tools/bump-version.py -->
-<link rel="stylesheet" href="css/v2.css?v=19" />
-<link rel="preload" href="assets/portrait-particles.webp?v=19" as="image" type="image/webp" />
+<link rel="stylesheet" href="css/v2.css?v=22" />
+<link rel="preload" href="assets/portrait-particles.webp?v=22" as="image" type="image/webp" />
 
 <script>
   /* Runs before the first paint, so the intro curtain is already
@@ -126,8 +126,8 @@
        the fallback: it shows until the particles are built, and stays
        if they cannot be — opened from file://, for one. -->
   <section class="hero" id="home" data-hero>
-    <img class="hero__still" src="assets/portrait-particles.webp?v=19" width="334" height="520" alt="" />
-    <canvas class="hero__canvas" data-particles data-src="assets/portrait-particles.webp?v=19" aria-hidden="true"></canvas>
+    <img class="hero__still" src="assets/portrait-particles.webp?v=22" width="334" height="520" alt="" />
+    <canvas class="hero__canvas" data-particles data-src="assets/portrait-particles.webp?v=22" aria-hidden="true"></canvas>
 
     <div class="hero__content">
       <h1 class="hero__title">
@@ -157,12 +157,14 @@
            viewport. Bold survives the split. -->
       <p class="about__text" data-words>
         Hey, I'm <b>Suyash.</b> A web and AI developer and third-year B.Tech CSE
-        (Data Science) student who turns ideas into working products. For SIH 2026 I
-        built <b>AttackForecast</b>, a world model that forecasts where a network
-        attack is heading, and for Razorpay's AI Buildathon, <b>Muhurat</b>, a
-        benchmark for recovering failed payments. I'm building <b>Quenaire</b>, an AI
-        SaaS that drafts security questionnaire answers with RAG, and I shipped
-        <b>JanVaani</b>, which cut grievance resolution time from <b>72 hours to 36</b>.
+        (Data Science) student who turns ideas into working products. I built
+        <b>Quenaire</b>, an AI SaaS that answers security questionnaires from a
+        company's own documents, now live at <b>quenaire.com</b>. With my team I built
+        <b>Diplo</b>, a voice agent that uses your phone for you in Hindi, which
+        finished in the <b>top 5 at HackIIITD 2026</b>. For SIH 2026 I built
+        <b>AttackForecast</b>, a world model that forecasts where a network attack is
+        heading, and for Razorpay's AI Buildathon, <b>Muhurat</b>, a benchmark for
+        recovering failed payments.
         Two internships so far, at <b>IBM</b> and <b>Tryhosting</b>, and open to the
         next one.
       </p>
@@ -197,13 +199,13 @@
       <li class="skill" data-reveal data-glow>
         <span class="skill__num">03</span>
         <h3 class="skill__title">AI applications</h3>
-        <p class="skill__desc">A PyTorch world model forecasting attack stages in AttackForecast. Claude diagnosing failed payments in Muhurat. RAG over pgvector embeddings in Quenaire, and a Hugging Face Vision Transformer reading classroom engagement in Smart Attendance.</p>
+        <p class="skill__desc">A PyTorch world model forecasting attack stages in AttackForecast. Claude diagnosing failed payments in Muhurat. RAG over pgvector embeddings in Quenaire, and a voice agent in Diplo that turns Hindi speech into actions, with a small model on the phone for offline commands.</p>
         <ul class="tags"><li>PyTorch</li><li>Claude API</li><li>RAG</li><li>Hugging Face</li></ul>
       </li>
       <li class="skill" data-reveal data-glow>
         <span class="skill__num">04</span>
         <h3 class="skill__title">Cloud computing</h3>
-        <p class="skill__desc">AWS Academy Graduate, Cloud Foundations and Architect. IBM Cloud and Docker from the IBM internship. Smart Attendance runs on Firebase and Render at zero cost.</p>
+        <p class="skill__desc">AWS Academy Graduate, Cloud Foundations and Architect. IBM Cloud and Docker from the IBM internship.</p>
         <ul class="tags"><li>AWS</li><li>IBM Cloud</li><li>Docker</li><li>Firebase</li></ul>
       </li>
     </ul>
@@ -222,11 +224,59 @@
 
       <article class="project" style="--i: 0">
         <div class="project__visual">
-          <img src="assets/attack-forecast.jpg?v=19" width="1200" height="900" loading="lazy"
-               alt="AttackForecast dashboard — a host's current and forecast attack risk, its infiltration probability over time, and the kill-chain timeline" />
+          <img src="assets/quenaire.jpg?v=22" width="1200" height="900" loading="lazy"
+               alt="Quenaire's live site — Security questionnaires, answered from your own documentation — above a vendor assessment in review, with drafted answers, confidence scores and approval status" />
         </div>
         <div class="project__info">
           <span class="project__num">01 / 05</span>
+          <h3 class="project__title">Quenaire</h3>
+          <p class="project__desc">
+            An AI SaaS, live at quenaire.com, that answers security and compliance
+            questionnaires from a company's own documentation. Policies and audit
+            reports are stored as vector embeddings in PostgreSQL with pgvector; every
+            drafted answer cites the passage it relied on, and questions the documents
+            don't cover are flagged as gaps, not guessed. I built the Spring Boot
+            backend and the React front end for uploading documents and reviewing drafts.
+          </p>
+          <ul class="tags"><li>Spring Boot</li><li>React</li><li>PostgreSQL</li><li>pgvector</li><li>RAG</li></ul>
+          <div class="project__links">
+            <a class="btn btn--solid" href="https://quenaire.com" target="_blank" rel="noopener noreferrer">Live site <i aria-hidden="true">↗</i></a>
+            <a class="btn" href="https://github.com/HowSuyash/Quenaire" target="_blank" rel="noopener noreferrer">Source <i aria-hidden="true">↗</i></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" style="--i: 1">
+        <div class="project__visual">
+          <img src="assets/diplo.jpg?v=22" width="1200" height="900" loading="lazy"
+               alt="Diplo's live demo, booking an Uber by voice — its checklist reads Opened Uber, Destination set: India Gate, Picked the place, beside the phone showing Uber's ride options" />
+        </div>
+        <div class="project__info">
+          <span class="project__num">02 / 05</span>
+          <h3 class="project__title">Diplo</h3>
+          <p class="project__desc">
+            A voice agent that runs your Android phone and the web from a goal spoken
+            in Hindi, Hinglish or English. Built with team DietCode, it finished in the
+            top 5 at HackIIITD 2026. It answers from the live web, checks portals like
+            scholarship and PNR status through TinyFish, and taps through phone apps to
+            call, message or book a ride. It asks "haan?" before anything risky, never
+            pays or types a PIN or OTP, and handles simple commands offline on the phone.
+          </p>
+          <ul class="tags"><li>Kotlin</li><li>Jetpack Compose</li><li>FastAPI</li><li>TinyFish</li><li>On-device LLM</li></ul>
+          <div class="project__links">
+            <a class="btn btn--solid" href="assets/diplo-demo.mp4?v=22" target="_blank" rel="noopener noreferrer">Demo video <i aria-hidden="true">↗</i></a>
+            <a class="btn" href="https://github.com/HowSuyash/Diplo" target="_blank" rel="noopener noreferrer">Source <i aria-hidden="true">↗</i></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" style="--i: 2">
+        <div class="project__visual">
+          <img src="assets/attack-forecast.jpg?v=22" width="1200" height="900" loading="lazy"
+               alt="AttackForecast dashboard — a host's current and forecast attack risk, its infiltration probability over time, and the kill-chain timeline" />
+        </div>
+        <div class="project__info">
+          <span class="project__num">03 / 05</span>
           <h3 class="project__title">AttackForecast</h3>
           <p class="project__desc">
             A world model that forecasts where a network attack is heading before the
@@ -244,13 +294,13 @@
         </div>
       </article>
 
-      <article class="project" style="--i: 1">
+      <article class="project" style="--i: 3">
         <div class="project__visual project__visual--left">
-          <img src="assets/muhurat.jpg?v=19" width="1200" height="900" loading="lazy"
+          <img src="assets/muhurat.jpg?v=22" width="1200" height="900" loading="lazy"
                alt="Muhurat dashboard — ₹5.10 lakh at risk across 300 failed payments; naive retries recover 12.2%, while 71.6% is recoverable" />
         </div>
         <div class="project__info">
-          <span class="project__num">02 / 05</span>
+          <span class="project__num">04 / 05</span>
           <h3 class="project__title">Muhurat</h3>
           <p class="project__desc">
             A benchmark for failed-payment recovery, built for the Razorpay AI
@@ -268,47 +318,13 @@
         </div>
       </article>
 
-      <article class="project" style="--i: 2">
-        <!-- a schematic, not a screenshot: Quenaire has no public
-             deployment to capture yet -->
-        <div class="project__visual project__visual--rag" role="img"
-             aria-label="Illustration of Quenaire at work: a questionnaire question, the three policy passages retrieved for it, and the drafted answer citing them">
-          <div class="rag">
-            <p class="rag__head"><b>Q 4.2</b><i>Data protection</i></p>
-            <p class="rag__q">Is customer data encrypted at rest?</p>
-            <ol class="rag__hits">
-              <li><em>Information Security Policy §3.1</em><small>0.92</small></li>
-              <li><em>Data Handling Standard §2.4</em><small>0.87</small></li>
-              <li><em>Cloud Hosting Controls §1.2</em><small>0.81</small></li>
-            </ol>
-            <p class="rag__a"><b>Draft</b> Yes. Customer data is encrypted at rest and in transit, per InfoSec Policy §3.1.</p>
-            <p class="rag__foot"><i>pgvector · top 3</i><b>Ready for review</b></p>
-          </div>
-        </div>
-        <div class="project__info">
-          <span class="project__num">03 / 05</span>
-          <h3 class="project__title">Quenaire</h3>
-          <p class="project__desc">
-            An AI SaaS that drafts answers to security and compliance questionnaires.
-            Company policies are stored as vector embeddings in PostgreSQL with
-            pgvector, so every answer is grounded in the most relevant evidence.
-            I built the Spring Boot backend and the React front end for uploading
-            documents and reviewing drafts.
-          </p>
-          <ul class="tags"><li>Spring Boot</li><li>React</li><li>PostgreSQL</li><li>pgvector</li><li>RAG</li></ul>
-          <div class="project__links">
-            <a class="btn" href="https://github.com/HowSuyash/Quenaire" target="_blank" rel="noopener noreferrer">Source <i aria-hidden="true">↗</i></a>
-          </div>
-        </div>
-      </article>
-
-      <article class="project" style="--i: 3">
+      <article class="project" style="--i: 4">
         <div class="project__visual">
-          <img src="assets/janvaani.jpg?v=19" width="1200" height="900" loading="lazy"
+          <img src="assets/janvaani.jpg?v=22" width="1200" height="900" loading="lazy"
                alt="JanVaani live site — One Platform. Every Grievance. Resolved. — with complaint statistics" />
         </div>
         <div class="project__info">
-          <span class="project__num">04 / 05</span>
+          <span class="project__num">05 / 05</span>
           <h3 class="project__title">JanVaani</h3>
           <p class="project__desc">
             Zero-backend civic grievance platform built for India Innovates 2026.
@@ -321,28 +337,6 @@
             <a class="btn btn--solid" href="https://smartps-crm.netlify.app/" target="_blank" rel="noopener noreferrer">Live site <i aria-hidden="true">↗</i></a>
             <a class="btn" href="https://drive.google.com/file/d/1BvhKTSOiJBS4cqGuRTViAYkHfZNquVjM/view?usp=sharing" target="_blank" rel="noopener noreferrer">Demo video <i aria-hidden="true">↗</i></a>
             <a class="btn" href="https://github.com/HowSuyash/Smart-psCRM" target="_blank" rel="noopener noreferrer">Source <i aria-hidden="true">↗</i></a>
-          </div>
-        </div>
-      </article>
-
-      <article class="project" style="--i: 4">
-        <div class="project__visual">
-          <img src="assets/smart-attendance.jpg?v=19" width="1200" height="900" loading="lazy"
-               alt="Smart Attendance sign-in screen for the face emotion recognition system" />
-        </div>
-        <div class="project__info">
-          <span class="project__num">05 / 05</span>
-          <h3 class="project__title">Smart Attendance</h3>
-          <p class="project__desc">
-            Full-stack engagement analytics for classrooms, built for Cloud Hackathon 2026.
-            A Hugging Face Vision Transformer classifies emotion from classroom photos in
-            real time and maps it to engagement — focused or distracted. I owned the
-            backend, Firebase integration and cloud architecture, on a zero-cost stack.
-          </p>
-          <ul class="tags"><li>Flask</li><li>MediaPipe</li><li>Hugging Face</li><li>Firebase</li><li>Chart.js</li></ul>
-          <div class="project__links">
-            <a class="btn btn--solid" href="https://dashing-concha-5401f5.netlify.app/login.html" target="_blank" rel="noopener noreferrer">Live site <i aria-hidden="true">↗</i></a>
-            <a class="btn" href="https://github.com/HowSuyash/SmartAttendance" target="_blank" rel="noopener noreferrer">Source <i aria-hidden="true">↗</i></a>
           </div>
         </div>
       </article>
@@ -437,16 +431,16 @@
         </ul>
 
         <div class="resume__actions">
-          <a class="btn btn--solid btn--lg" href="assets/resume.pdf?v=19" target="_blank" rel="noopener noreferrer">Open PDF <i aria-hidden="true">↗</i></a>
-          <a class="btn btn--lg" href="assets/resume.pdf?v=19" download="Suyash-Shukla-Resume.pdf">Download</a>
+          <a class="btn btn--solid btn--lg" href="assets/resume.pdf?v=22" target="_blank" rel="noopener noreferrer">Open PDF <i aria-hidden="true">↗</i></a>
+          <a class="btn btn--lg" href="assets/resume.pdf?v=22" download="Suyash-Shukla-Resume.pdf">Download</a>
         </div>
       </div>
 
       <!-- the page image, not an <iframe>: PDF embeds render blank on
            most mobile browsers. Clicking opens the real PDF. -->
-      <a class="paper" href="assets/resume.pdf?v=19" target="_blank" rel="noopener noreferrer"
+      <a class="paper" href="assets/resume.pdf?v=22" target="_blank" rel="noopener noreferrer"
          aria-label="Open Suyash Shukla's résumé as a PDF" data-tilt data-reveal>
-        <img src="assets/resume-preview.png?v=19" width="1191" height="1684" loading="lazy"
+        <img src="assets/resume-preview.png?v=22" width="1191" height="1684" loading="lazy"
              alt="First page of Suyash Shukla's résumé — summary, work experience, projects and education" />
       </a>
     </div>
@@ -467,7 +461,7 @@
       <a href="https://github.com/HowSuyash" target="_blank" rel="noopener noreferrer">GitHub <i aria-hidden="true">↗</i></a>
       <a href="https://www.linkedin.com/in/howsuyash/" target="_blank" rel="noopener noreferrer">LinkedIn <i aria-hidden="true">↗</i></a>
       <a href="tel:+916392852762">+91 63928 52762</a>
-      <a href="assets/resume.pdf?v=19" target="_blank" rel="noopener noreferrer">Résumé <i aria-hidden="true">↗</i></a>
+      <a href="assets/resume.pdf?v=22" target="_blank" rel="noopener noreferrer">Résumé <i aria-hidden="true">↗</i></a>
     </div>
   </section>
 
@@ -481,6 +475,6 @@
 
 <div class="toast" data-toast role="status" aria-live="polite"></div>
 
-<script src="js/v2.js?v=19"></script>
+<script src="js/v2.js?v=22"></script>
 </body>
 </html>
